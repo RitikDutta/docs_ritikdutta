@@ -37,6 +37,5 @@ export default defineConfig({
 			],
 		}),
 	],
-	site: 'https://ritikdutta.github.io/docs_ritikdutta',
-	base: '/docs_ritikdutta/',
+	site: 'https://docs.ritikdutta.com',
 });
