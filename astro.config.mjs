@@ -3,8 +3,6 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://ritikdutta.github.io',
-	base: 'docs_ritikdutta',
 	integrations: [
 		starlight({
 			title: 'Designs',
@@ -39,4 +37,6 @@ export default defineConfig({
 			],
 		}),
 	],
+	site: 'https://ritikdutta.github.io',
+	base: '/docs_ritikdutta/',
 });
