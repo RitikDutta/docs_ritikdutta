@@ -6,17 +6,8 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Designs',
-      favicon: './src/assets/me2.ico',
       head: [
-        // Add ICO favicon fallback for Safari.
-        {
-          tag: 'link',
-          attrs: {
-            rel: 'icon',
-            href: './src/assets/me2.ico',
-            sizes: '32x32',
-          },
-        },
+
         // Add custom CSS for active navigation item
         {
           tag: 'link',
