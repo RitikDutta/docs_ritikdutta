@@ -1,0 +1,4 @@
+/* Highlight and make the active navigation item bold */
+li a[aria-current="true"] span {
+  font-weight: bold;
+}
