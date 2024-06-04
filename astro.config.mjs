@@ -6,6 +6,8 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Designs',
+			favicon: './src/assets/me2.ico',
+
 			social: {
 				github: 'https://github.com/ritikdutta.com',
 			},
