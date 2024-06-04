@@ -7,6 +7,17 @@ export default defineConfig({
 		starlight({
 			title: 'Designs',
 			favicon: './src/assets/me2.ico',
+			head: [
+				// Add ICO favicon fallback for Safari.
+				{
+				tag: 'link',
+				attrs: {
+					rel: 'icon',
+					href: './src/assets/me2.ico',
+					sizes: '32x32',
+				},
+				},
+			],
 
 			social: {
 				github: 'https://github.com/ritikdutta.com',
