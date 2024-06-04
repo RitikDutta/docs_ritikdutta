@@ -22,7 +22,7 @@ export default defineConfig({
           tag: 'link',
           attrs: {
             rel: 'stylesheet',
-            href: '/src/assets/styles.css', // Ensure this path is correct
+            href: '/styles.css', // Ensure this path is correct
           },
         },
       ],
