@@ -6,6 +6,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Designs',
+      favicon: '/me2.ico',
       head: [
 
         // Add custom CSS for active navigation item
