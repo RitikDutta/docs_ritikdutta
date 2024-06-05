@@ -21,6 +21,7 @@ export default defineConfig({
 
       social: {
         github: 'https://github.com/ritikdutta.com',
+        twitter: 'https://x.com/RitikDutta7'
       },
       sidebar: [
         {
@@ -33,6 +34,15 @@ export default defineConfig({
             { label: 'Architecture', link: '/guides/architecture/' },
             { label: 'Wireframe', link: '/guides/wireframe/' },
             { label: 'KPI', link: '/guides/kpi/' },
+          ],
+        },
+        {
+          label: 'Data Science',
+          items: [
+            // Each item here is one entry in the navigation menu.
+            { label: 'Statistics', link: '/datascience/stats/' },
+            { label: 'ML DL', link: '/datascience/ml_dl/' },
+            { label: 'ML DL 2', link: '/datascience/ml_dl2/' },
           ],
         },
         {
