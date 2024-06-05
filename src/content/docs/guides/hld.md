@@ -3,8 +3,6 @@ title: High-Level Design Document
 description: High-Level Design for the Company Work Environment Management System.
 ---
 
-# High-Level Design Document
-
 ## Abstract
 
 Inefficient employee attendance systems often fail to accurately track individual employee activities, which can make it challenging to evaluate employee performance and provide appropriate promotions. To address this issue, we propose the development of an advanced computer vision system named "Company Work Environment Management." This system creates attendance records based on employee arrival and departure times, as well as tracking individual activities throughout the day, such as working, talking on the phone, or looking away from their system.
