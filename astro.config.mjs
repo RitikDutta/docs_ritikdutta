@@ -43,6 +43,7 @@ export default defineConfig({
             { label: 'Statistics', link: '/datascience/stats/' },
             { label: 'ML DL', link: '/datascience/ml_dl/' },
             { label: 'ML DL 2', link: '/datascience/ml_dl2/' },
+            { label: 'Company Wise', link: '/datascience/comp_wise/' },
           ],
         },
         {
