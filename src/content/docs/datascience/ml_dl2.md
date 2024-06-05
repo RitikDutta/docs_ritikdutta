@@ -1,5 +1,5 @@
 ---
-title: Example Reference
+title: Machine Learning and Data Science
 description: A reference page in my new Starlight docs site.
 ---
 
