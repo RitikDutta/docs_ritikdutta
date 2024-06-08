@@ -37,6 +37,14 @@ export default defineConfig({
           ],
         },
         {
+          label: 'Datamigrato Docs',
+          items: [
+            // Each item here is one entry in the navigation menu.
+            { label: 'HLD', link: '/datamigrato/hld/' },
+            { label: 'LLD', link: '/datamigrato/lld/' },
+          ],
+        },
+        {
           label: 'Data Science',
           items: [
             // Each item here is one entry in the navigation menu.
