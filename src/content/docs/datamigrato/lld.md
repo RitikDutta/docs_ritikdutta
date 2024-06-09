@@ -143,13 +143,13 @@ To give you a better grasp, let’s look at the function call logic within our p
 
 ## 4 UML Diagram and Workflow
 
-<!-- ![Introduction Diagram](../../../assets/uml.png "Introduction Diagram")
-![My Image](../../../assets/uml.png "Introduction Diagram") -->
+![Introduction Diagram](../../../assets/uml.png "UML Diagram")
+<!-- ![My Image](../../../assets/uml.png "Introduction Diagram") -->
 
 <!-- Wrap the image with an <a> tag to enable Lightbox2 -->
-<a href="../../../src/assets/uml.png" data-lightbox="image-1">
+<!-- <a href="../../../src/assets/uml.png" data-lightbox="image-1">
   <img src="../../../src/assets/uml.png" alt="My Image">
-</a>
+</a> -->
 
 The UML diagram provides a comprehensive overview of the class interactions and method calls involved in the Datamigrato data migration process. Here's a detailed explanation of each component and how they interact with each other.
 
