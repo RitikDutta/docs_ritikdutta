@@ -1,34 +1,20 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
+// https://astro.build/config
 export default defineConfig({
   integrations: [
     starlight({
       title: 'Designs',
       favicon: '/me2.ico',
       head: [
+
         // Add custom CSS for active navigation item
         {
           tag: 'link',
           attrs: {
             rel: 'stylesheet',
             href: '/styles.css', // Ensure this path is correct
-          },
-        },
-        // Add Lightbox2 CSS
-        {
-          tag: 'link',
-          attrs: {
-            rel: 'stylesheet',
-            href: 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css',
-          },
-        },
-        // Add Lightbox2 JS
-        {
-          tag: 'script',
-          attrs: {
-            src: 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js',
-            defer: true,
           },
         },
       ],
@@ -41,6 +27,7 @@ export default defineConfig({
         {
           label: 'CWEM Docs',
           items: [
+            // Each item here is one entry in the navigation menu.
             { label: 'CWEM Guide', link: '/guides/company_work_environment_management/' },
             { label: 'HLD', link: '/guides/hld/' },
             { label: 'LLD', link: '/guides/lld/' },
@@ -52,6 +39,7 @@ export default defineConfig({
         {
           label: 'Datamigrato Docs',
           items: [
+            // Each item here is one entry in the navigation menu.
             { label: 'HLD', link: '/datamigrato/hld/' },
             { label: 'LLD', link: '/datamigrato/lld/' },
           ],
@@ -59,6 +47,7 @@ export default defineConfig({
         {
           label: 'Data Science',
           items: [
+            // Each item here is one entry in the navigation menu.
             { label: 'Statistics', link: '/datascience/stats/' },
             { label: 'ML DL', link: '/datascience/ml_dl/' },
             { label: 'ML DL 2', link: '/datascience/ml_dl2/' },
@@ -68,6 +57,7 @@ export default defineConfig({
         {
           label: 'Guides',
           items: [
+            // Each item here is one entry in the navigation menu.
             { label: 'Example Guide', link: '/guides/example/' },
           ],
         },
