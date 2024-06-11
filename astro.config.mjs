@@ -40,6 +40,7 @@ export default defineConfig({
           label: 'Datamigrato Docs',
           items: [
             // Each item here is one entry in the navigation menu.
+            { label: 'Datamigrato Guide', link: '/datamigrato/datamigrato_guide/' },
             { label: 'HLD', link: '/datamigrato/hld/' },
             { label: 'LLD', link: '/datamigrato/lld/' },
           ],
