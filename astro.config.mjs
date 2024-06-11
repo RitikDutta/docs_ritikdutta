@@ -45,16 +45,16 @@ export default defineConfig({
             { label: 'LLD', link: '/datamigrato/lld/' },
           ],
         },
-        {
-          label: 'Data Science',
-          items: [
-            // Each item here is one entry in the navigation menu.
-            { label: 'Statistics', link: '/datascience/stats/' },
-            { label: 'ML DL', link: '/datascience/ml_dl/' },
-            { label: 'ML DL 2', link: '/datascience/ml_dl2/' },
-            { label: 'Company Wise', link: '/datascience/comp_wise/' },
-          ],
-        },
+        // {
+        //   label: 'Data Science',
+        //   items: [
+        //     // Each item here is one entry in the navigation menu.
+        //     { label: 'Statistics', link: '/datascience/stats/' },
+        //     { label: 'ML DL', link: '/datascience/ml_dl/' },
+        //     { label: 'ML DL 2', link: '/datascience/ml_dl2/' },
+        //     { label: 'Company Wise', link: '/datascience/comp_wise/' },
+        //   ],
+        // },
         {
           label: 'Guides',
           items: [
