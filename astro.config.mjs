@@ -55,17 +55,17 @@ export default defineConfig({
         //     { label: 'Company Wise', link: '/datascience/comp_wise/' },
         //   ],
         // },
-        {
-          label: 'Guides',
-          items: [
-            // Each item here is one entry in the navigation menu.
-            { label: 'Example Guide', link: '/guides/example/' },
-          ],
-        },
-        {
-          label: 'Reference',
-          autogenerate: { directory: 'reference' },
-        },
+        // {
+        //   label: 'Guides',
+        //   items: [
+        //     // Each item here is one entry in the navigation menu.
+        //     { label: 'Example Guide', link: '/guides/example/' },
+        //   ],
+        // },
+        // {
+        //   label: 'Reference',
+        //   autogenerate: { directory: 'reference' },
+        // },
       ],
     }),
   ],
