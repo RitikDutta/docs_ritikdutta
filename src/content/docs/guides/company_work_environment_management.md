@@ -61,9 +61,9 @@ sudo apt-get install ffmpeg</code>
 
 ## Documentations
 <ul>
-<li><a href="https://docs.ritikdutta.com/guides/hld/" target="_blank">High Level Document</a></li>
-<li><a href="https://docs.ritikdutta.com/guides/lld/" target="_blank">Low Level Document</a></li>
-<li><a href="https://docs.ritikdutta.com/guides/architecture/" target="_blank">Architecture</a></li>
-<li><a href="https://docs.ritikdutta.com/guides/wireframe/" target="_blank">Wireframe</a></li>
-<li><a href="https://docs.ritikdutta.com/guides/kpi/" target="_blank">Detailed Project Report</a></li>
+<li><a href="https://docs.ritikdutta.com/guides/hld/" >High Level Document</a></li>
+<li><a href="https://docs.ritikdutta.com/guides/lld/" >Low Level Document</a></li>
+<li><a href="https://docs.ritikdutta.com/guides/architecture/" >Architecture</a></li>
+<li><a href="https://docs.ritikdutta.com/guides/wireframe/" >Wireframe</a></li>
+<li><a href="https://docs.ritikdutta.com/guides/kpi/" >Detailed Project Report</a></li>
 </ul>
