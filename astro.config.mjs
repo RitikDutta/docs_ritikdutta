@@ -19,10 +19,18 @@ export default defineConfig({
         },
       ],
 
-      social: {
-        github: 'https://github.com/ritikdutta.com',
-        twitter: 'https://x.com/RitikDutta7'
-      },
+      social: [
+        {
+          label: 'GitHub',
+          href: 'https://github.com/ritikdutta.com',
+          icon: 'github',
+        },
+        {
+          label: 'Twitter',
+          href: 'https://x.com/RitikDutta7',
+          icon: 'twitter',
+        },
+      ],
       sidebar: [
         {
           label: 'CWEM Docs',
@@ -43,6 +51,12 @@ export default defineConfig({
             { label: 'Datamigrato Guide', link: '/datamigrato/datamigrato_guide/' },
             { label: 'HLD', link: '/datamigrato/hld/' },
             { label: 'LLD', link: '/datamigrato/lld/' },
+          ],
+        },
+        {
+          label: 'Interview Ready',
+          items: [
+            { label: 'Introduction', link: '/interview_ready/intro/' },
           ],
         },
         // {
