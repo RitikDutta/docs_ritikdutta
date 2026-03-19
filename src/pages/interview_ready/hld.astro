@@ -1,0 +1,16 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import * as HldDoc from '../../../HLD.md';
+
+const frontmatter = {
+  title: 'Interview Mentor HLD',
+  description: 'High-level design for the Interview Mentor project.',
+};
+
+const headings = HldDoc.getHeadings();
+const Content = HldDoc.Content;
+---
+
+<StarlightPage frontmatter={frontmatter} headings={headings}>
+  <Content />
+</StarlightPage>

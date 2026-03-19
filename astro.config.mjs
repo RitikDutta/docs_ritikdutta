@@ -57,6 +57,8 @@ export default defineConfig({
           label: 'Interview Ready',
           items: [
             { label: 'Introduction', link: '/interview_ready/intro/' },
+            { label: 'HLD', link: '/interview_ready/hld/' },
+            { label: 'LLD', link: '/interview_ready/lld/' },
           ],
         },
         // {

@@ -1,0 +1,555 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-bguv2lll"> <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Low-Level Design Document | Designs</title><link rel="canonical" href="https://docs.ritikdutta.com/guides/lld/"/><link rel="sitemap" href="/sitemap-index.xml"/><link rel="stylesheet" href="/styles.css"/><link rel="shortcut icon" href="/me2.ico" type="image/x-icon"/><meta name="generator" content="Astro v5.16.5"/><meta name="generator" content="Starlight v0.37.1"/><meta property="og:title" content="Low-Level Design Document"/><meta property="og:type" content="article"/><meta property="og:url" content="https://docs.ritikdutta.com/guides/lld/"/><meta property="og:locale" content="en"/><meta property="og:description" content="Low-Level Design for the Company Work Environment Management System."/><meta property="og:site_name" content="Designs"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="Low-Level Design for the Company Work Environment Management System."/><meta name="twitter:site" content="@RitikDutta7"/><script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg><svg aria-hidden="true" class="dark astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg><svg aria-hidden="true" class="auto astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></template><link rel="stylesheet" href="/_astro/print.DNXP8c50.css" media="print"><link rel="stylesheet" href="/_astro/hld.BGYTJlGT.css">
+<style>@layer starlight.components{:root{--sl-badge-default-border: var(--sl-color-accent);--sl-badge-default-bg: var(--sl-color-accent-low);--sl-badge-default-text: #fff;--sl-badge-note-border: var(--sl-color-blue);--sl-badge-note-bg: var(--sl-color-blue-low);--sl-badge-note-text: #fff;--sl-badge-danger-border: var(--sl-color-red);--sl-badge-danger-bg: var(--sl-color-red-low);--sl-badge-danger-text: #fff;--sl-badge-success-border: var(--sl-color-green);--sl-badge-success-bg: var(--sl-color-green-low);--sl-badge-success-text: #fff;--sl-badge-caution-border: var(--sl-color-orange);--sl-badge-caution-bg: var(--sl-color-orange-low);--sl-badge-caution-text: #fff;--sl-badge-tip-border: var(--sl-color-purple);--sl-badge-tip-bg: var(--sl-color-purple-low);--sl-badge-tip-text: #fff}[data-theme=light]:root{--sl-badge-default-bg: var(--sl-color-accent-high);--sl-badge-note-bg: var(--sl-color-blue-high);--sl-badge-danger-bg: var(--sl-color-red-high);--sl-badge-success-bg: var(--sl-color-green-high);--sl-badge-caution-bg: var(--sl-color-orange-high);--sl-badge-tip-bg: var(--sl-color-purple-high)}.sl-badge:where(.astro-avdet4wd){display:inline-block;border:1px solid var(--sl-color-border-badge);border-radius:.25rem;font-family:var(--sl-font-system-mono);line-height:normal;color:var(--sl-color-text-badge);background-color:var(--sl-color-bg-badge);overflow-wrap:anywhere}.sidebar-content .sl-badge:where(.astro-avdet4wd){line-height:1;font-size:var(--sl-text-xs);padding:.125rem .375rem}.sidebar-content a[aria-current=page]>.sl-badge:where(.astro-avdet4wd){--sl-color-bg-badge: transparent;--sl-color-border-badge: currentColor;color:inherit}.default:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-default-bg);--sl-color-border-badge: var(--sl-badge-default-border);--sl-color-text-badge: var(--sl-badge-default-text)}.note:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-note-bg);--sl-color-border-badge: var(--sl-badge-note-border);--sl-color-text-badge: var(--sl-badge-note-text)}.danger:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-danger-bg);--sl-color-border-badge: var(--sl-badge-danger-border);--sl-color-text-badge: var(--sl-badge-danger-text)}.success:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-success-bg);--sl-color-border-badge: var(--sl-badge-success-border);--sl-color-text-badge: var(--sl-badge-success-text)}.tip:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-tip-bg);--sl-color-border-badge: var(--sl-badge-tip-border);--sl-color-text-badge: var(--sl-badge-tip-text)}.caution:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-caution-bg);--sl-color-border-badge: var(--sl-badge-caution-border);--sl-color-text-badge: var(--sl-badge-caution-text)}.small:where(.astro-avdet4wd){font-size:var(--sl-text-xs);padding:.125rem .25rem}.medium:where(.astro-avdet4wd){font-size:var(--sl-text-sm);padding:.175rem .35rem}.large:where(.astro-avdet4wd){font-size:var(--sl-text-base);padding:.225rem .45rem}.sl-markdown-content :is(h1,h2,h3,h4,h5,h6) .sl-badge:where(.astro-avdet4wd){vertical-align:middle}}
+@layer starlight.components{.card-grid:where(.astro-zntqmydn){display:grid;grid-template-columns:100%;gap:1rem}.card-grid:where(.astro-zntqmydn)>*{margin-top:0!important}@media(min-width:50rem){.card-grid:where(.astro-zntqmydn){grid-template-columns:1fr 1fr;gap:1.5rem}.stagger:where(.astro-zntqmydn){--stagger-height: 5rem;padding-bottom:var(--stagger-height)}.stagger:where(.astro-zntqmydn)>*:nth-child(2n){transform:translateY(var(--stagger-height))}}}
+@layer starlight.components{.card:where(.astro-v5tidmuc){--sl-card-border: var(--sl-color-purple);--sl-card-bg: var(--sl-color-purple-low);border:1px solid var(--sl-color-gray-5);background-color:var(--sl-color-black);padding:clamp(1rem,calc(.125rem + 3vw),2.5rem);flex-direction:column;gap:clamp(.5rem,calc(.125rem + 1vw),1rem)}.card:where(.astro-v5tidmuc):nth-child(4n+1){--sl-card-border: var(--sl-color-orange);--sl-card-bg: var(--sl-color-orange-low)}.card:where(.astro-v5tidmuc):nth-child(4n+3){--sl-card-border: var(--sl-color-green);--sl-card-bg: var(--sl-color-green-low)}.card:where(.astro-v5tidmuc):nth-child(4n+4){--sl-card-border: var(--sl-color-red);--sl-card-bg: var(--sl-color-red-low)}.card:where(.astro-v5tidmuc):nth-child(4n+5){--sl-card-border: var(--sl-color-blue);--sl-card-bg: var(--sl-color-blue-low)}.title:where(.astro-v5tidmuc){font-weight:600;font-size:var(--sl-text-h4);color:var(--sl-color-white);line-height:var(--sl-line-height-headings);gap:1rem;align-items:center}.card:where(.astro-v5tidmuc) .icon:where(.astro-v5tidmuc){border:1px solid var(--sl-card-border);background-color:var(--sl-card-bg);padding:.2em;border-radius:.25rem;flex-shrink:0}.card:where(.astro-v5tidmuc) .body:where(.astro-v5tidmuc){margin:0;font-size:clamp(var(--sl-text-sm),calc(.5rem + 1vw),var(--sl-text-body))}}
+@layer starlight.components{svg:where(.astro-c6vsoqas){color:var(--sl-icon-color);font-size:var(--sl-icon-size, 1em);width:1em;height:1em}}
+@layer starlight.components{.sl-steps{--bullet-size: calc(var(--sl-line-height) * 1rem);--bullet-margin: .375rem;list-style:none;counter-reset:steps-counter var(--sl-steps-start, 0);padding-inline-start:0}.sl-steps>li{counter-increment:steps-counter;position:relative;padding-inline-start:calc(var(--bullet-size) + 1rem);padding-bottom:1px;min-height:calc(var(--bullet-size) + var(--bullet-margin))}.sl-steps>li+li{margin-top:0}.sl-steps>li:before{content:counter(steps-counter);position:absolute;top:0;inset-inline-start:0;width:var(--bullet-size);height:var(--bullet-size);line-height:var(--bullet-size);font-size:var(--sl-text-xs);font-weight:600;text-align:center;color:var(--sl-color-white);background-color:var(--sl-color-gray-6);border-radius:99rem;box-shadow:inset 0 0 0 1px var(--sl-color-gray-5)}.sl-steps>li:after{--guide-width: 1px;content:"";position:absolute;top:calc(var(--bullet-size) + var(--bullet-margin));bottom:var(--bullet-margin);inset-inline-start:calc((var(--bullet-size) - var(--guide-width)) / 2);width:var(--guide-width);background-color:var(--sl-color-hairline-light)}}@layer starlight.content{.sl-steps>li>:first-child{--lh: calc(1em * var(--sl-line-height));--shift-y: calc(.5 * (var(--bullet-size) - var(--lh)));transform:translateY(var(--shift-y));margin-bottom:var(--shift-y)}.sl-steps>li>:first-child:where(h1,h2,h3,h4,h5,h6){--lh: calc(1em * var(--sl-line-height-headings))}@supports (--prop: 1lh){.sl-steps>li>:first-child{--lh: 1lh}}}
+@layer starlight.components{.sl-link-button:where(.astro-xwgiixxa){align-items:center;border:1px solid transparent;border-radius:999rem;display:inline-flex;font-size:var(--sl-text-sm);gap:.5em;line-height:1.1875;outline-offset:.25rem;padding:.4375rem 1.125rem;text-decoration:none}.sl-link-button:where(.astro-xwgiixxa).primary{background:var(--sl-color-text-accent);border-color:var(--sl-color-text-accent);color:var(--sl-color-black)}.sl-link-button:where(.astro-xwgiixxa).primary:hover{color:var(--sl-color-black)}.sl-link-button:where(.astro-xwgiixxa).secondary{border-color:inherit;color:var(--sl-color-white)}.sl-link-button:where(.astro-xwgiixxa).minimal{color:var(--sl-color-white);padding-inline:0}.sl-link-button:where(.astro-xwgiixxa) svg{flex-shrink:0}@media(min-width:50rem){.sl-link-button:where(.astro-xwgiixxa){font-size:var(--sl-text-base);padding:.9375rem 1.25rem}}.sl-markdown-content .sl-link-button:where(.astro-xwgiixxa){margin-inline-end:1rem}.sl-markdown-content .sl-link-button:where(.astro-xwgiixxa):not(:where(p *)){margin-block:1rem}}
+</style><script type="module" src="/_astro/page.B1D-nYk3.js"></script></head> <body class="astro-bguv2lll"> <a href="#_top" class="astro-7q3lir66">Skip to content</a>  <div class="page sl-flex astro-vrdttmbt"> <header class="header astro-vrdttmbt"><div class="header astro-kmkmnagf"> <div class="title-wrapper sl-flex astro-kmkmnagf"> <a href="/" class="site-title sl-flex astro-m46x6ez3">  <span class="astro-m46x6ez3" translate="no"> Designs </span> </a>  </div> <div class="sl-flex print:hidden astro-kmkmnagf"> <site-search class="astro-kmkmnagf astro-v37mnknz" data-translations="{&#34;placeholder&#34;:&#34;Search&#34;}"> <button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-v37mnknz"> <svg aria-hidden="true" class="astro-v37mnknz astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"/></svg> <span class="sl-hidden md:sl-block astro-v37mnknz" aria-hidden="true">Search</span> <kbd class="sl-hidden md:sl-flex astro-v37mnknz" style="display: none;"> <kbd class="astro-v37mnknz">Ctrl</kbd><kbd class="astro-v37mnknz">K</kbd> </kbd> </button> <dialog style="padding:0" aria-label="Search" class="astro-v37mnknz"> <div class="dialog-frame sl-flex astro-v37mnknz">  <button data-close-modal class="sl-flex md:sl-hidden astro-v37mnknz"> Cancel </button> <div class="search-container astro-v37mnknz"> <div id="starlight__search" class="astro-v37mnknz"></div> </div> </div> </dialog> </site-search>  <script>
+	(() => {
+		const openBtn = document.querySelector('button[data-open-modal]');
+		const shortcut = openBtn?.querySelector('kbd');
+		if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+		const platformKey = shortcut.querySelector('kbd');
+		if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+			platformKey.textContent = '⌘';
+			openBtn.setAttribute('aria-keyshortcuts', 'Meta+K');
+		}
+		shortcut.style.display = '';
+	})();
+</script> <script type="module" src="/_astro/Search.astro_astro_type_script_index_0_lang.cjYDvRdi.js"></script>   </div> <div class="sl-hidden md:sl-flex print:hidden right-group astro-kmkmnagf"> <div class="sl-flex social-icons astro-kmkmnagf"> <a href="https://github.com/ritikdutta.com" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">GitHub</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a><a href="https://x.com/RitikDutta7" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">Twitter</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M24 4.4a10 10 0 0 1-2.83.78 5.05 5.05 0 0 0 2.17-2.79 9.7 9.7 0 0 1-3.13 1.23 4.89 4.89 0 0 0-5.94-1.03 5 5 0 0 0-2.17 2.38 5.15 5.15 0 0 0-.3 3.25c-1.95-.1-3.86-.63-5.61-1.53a14.04 14.04 0 0 1-4.52-3.74 5.2 5.2 0 0 0-.09 4.91c.39.74.94 1.35 1.61 1.82a4.77 4.77 0 0 1-2.23-.63v.06c0 1.16.4 2.29 1.12 3.18a4.9 4.9 0 0 0 2.84 1.74c-.73.22-1.5.26-2.24.12a4.89 4.89 0 0 0 4.59 3.49A9.78 9.78 0 0 1 0 19.73 13.65 13.65 0 0 0 7.55 22a13.63 13.63 0 0 0 9.96-4.16A14.26 14.26 0 0 0 21.6 7.65V7c.94-.72 1.75-1.6 2.4-2.6Z"/></svg></a> </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-4yphtoen"> <span class="sr-only astro-4yphtoen">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> <select autocomplete="off" class="astro-4yphtoen"> <option value="dark" class="astro-4yphtoen">Dark</option><option value="light" class="astro-4yphtoen">Light</option><option value="auto" selected class="astro-4yphtoen">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg> </label>  </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script> <script type="module">const r="starlight-theme",o=e=>e==="auto"||e==="dark"||e==="light"?e:"auto",c=()=>o(typeof localStorage<"u"&&localStorage.getItem(r));function n(e){typeof localStorage<"u"&&localStorage.setItem(r,e==="light"||e==="dark"?e:"")}const l=()=>matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";function t(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e==="auto"?l():e,n(e)}matchMedia("(prefers-color-scheme: light)").addEventListener("change",()=>{c()==="auto"&&t("auto")});class s extends HTMLElement{constructor(){super(),t(c()),this.querySelector("select")?.addEventListener("change",a=>{a.currentTarget instanceof HTMLSelectElement&&t(o(a.currentTarget.value))})}}customElements.define("starlight-theme-select",s);</script> <script type="module">class s extends HTMLElement{constructor(){super();const e=this.querySelector("select");e&&(e.addEventListener("change",t=>{t.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=t.currentTarget.value)}),window.addEventListener("pageshow",t=>{if(!t.persisted)return;const n=e.querySelector("option[selected]")?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}}customElements.define("starlight-lang-select",s);</script> </div> </div> </header> <nav class="sidebar print:hidden astro-vrdttmbt" aria-label="Main"> <starlight-menu-button class="print:hidden astro-jif73yzw"> <button aria-expanded="false" aria-label="Menu" aria-controls="starlight__sidebar" class="sl-flex md:sl-hidden astro-jif73yzw"> <svg aria-hidden="true" class="open-menu astro-jif73yzw astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg> <svg aria-hidden="true" class="close-menu astro-jif73yzw astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="m13.41 12 6.3-6.29a1.004 1.004 0 1 0-1.42-1.42L12 10.59l-6.29-6.3a1.004 1.004 0 0 0-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 0 0 0 1.42.998.998 0 0 0 1.42 0l6.29-6.3 6.29 6.3a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.42L13.41 12Z"/></svg> </button> </starlight-menu-button> <script type="module">class s extends HTMLElement{constructor(){super(),this.btn=this.querySelector("button"),this.btn.addEventListener("click",()=>this.toggleExpanded());const t=this.closest("nav");t&&t.addEventListener("keyup",e=>this.closeOnEscape(e))}setExpanded(t){this.setAttribute("aria-expanded",String(t)),document.body.toggleAttribute("data-mobile-menu-expanded",t)}toggleExpanded(){this.setExpanded(this.getAttribute("aria-expanded")!=="true")}closeOnEscape(t){t.code==="Escape"&&(this.setExpanded(!1),this.btn.focus())}}customElements.define("starlight-menu-button",s);</script>   <div id="starlight__sidebar" class="sidebar-pane astro-vrdttmbt"> <div class="sidebar-content sl-flex astro-vrdttmbt"> <sl-sidebar-state-persist data-hash="0c0r5pt" class="astro-kku4brbg"> <script aria-hidden="true">
+		(() => {
+			try {
+				if (!matchMedia('(min-width: 50em)').matches) return;
+				/** @type {HTMLElement | null} */
+				const target = document.querySelector('sl-sidebar-state-persist');
+				const state = JSON.parse(sessionStorage.getItem('sl-sidebar-state') || '0');
+				if (!target || !state || target.dataset.hash !== state.hash) return;
+				window._starlightScrollRestore = state.scroll;
+				customElements.define(
+					'sl-sidebar-restore',
+					class SidebarRestore extends HTMLElement {
+						connectedCallback() {
+							try {
+								const idx = parseInt(this.dataset.index || '');
+								const details = this.closest('details');
+								if (details && typeof state.open[idx] === 'boolean') details.open = state.open[idx];
+							} catch {}
+						}
+					}
+				);
+			} catch {}
+		})();
+	</script>  <ul class="top-level astro-3ii7xxms"> <li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">CWEM Docs</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="0"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/guides/company_work_environment_management/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">CWEM Guide</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/guides/hld/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">HLD</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/guides/lld/" aria-current="page" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">LLD</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/guides/architecture/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Architecture</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/guides/wireframe/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Wireframe</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/guides/kpi/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">KPI</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Datamigrato Docs</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="1"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/datamigrato/datamigrato_guide/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Datamigrato Guide</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/datamigrato/hld/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">HLD</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/datamigrato/lld/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">LLD</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Interview Ready</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="2"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/interview_ready/intro/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Introduction</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/interview_ready/hld/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">HLD</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/interview_ready/lld/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">LLD</span>  </a> </li> </ul>  </details> </li> </ul>   <script aria-hidden="true">
+		(() => {
+			const scroller = document.getElementById('starlight__sidebar');
+			if (!window._starlightScrollRestore || !scroller) return;
+			scroller.scrollTop = window._starlightScrollRestore;
+			delete window._starlightScrollRestore;
+		})();
+	</script> </sl-sidebar-state-persist>  <div class="md:sl-hidden"> <div class="mobile-preferences sl-flex astro-wu23bvmt"> <div class="social-icons astro-wu23bvmt"> <a href="https://github.com/ritikdutta.com" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">GitHub</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a><a href="https://x.com/RitikDutta7" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">Twitter</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M24 4.4a10 10 0 0 1-2.83.78 5.05 5.05 0 0 0 2.17-2.79 9.7 9.7 0 0 1-3.13 1.23 4.89 4.89 0 0 0-5.94-1.03 5 5 0 0 0-2.17 2.38 5.15 5.15 0 0 0-.3 3.25c-1.95-.1-3.86-.63-5.61-1.53a14.04 14.04 0 0 1-4.52-3.74 5.2 5.2 0 0 0-.09 4.91c.39.74.94 1.35 1.61 1.82a4.77 4.77 0 0 1-2.23-.63v.06c0 1.16.4 2.29 1.12 3.18a4.9 4.9 0 0 0 2.84 1.74c-.73.22-1.5.26-2.24.12a4.89 4.89 0 0 0 4.59 3.49A9.78 9.78 0 0 1 0 19.73 13.65 13.65 0 0 0 7.55 22a13.63 13.63 0 0 0 9.96-4.16A14.26 14.26 0 0 0 21.6 7.65V7c.94-.72 1.75-1.6 2.4-2.6Z"/></svg></a> </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-4yphtoen"> <span class="sr-only astro-4yphtoen">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> <select autocomplete="off" class="astro-4yphtoen"> <option value="dark" class="astro-4yphtoen">Dark</option><option value="light" class="astro-4yphtoen">Light</option><option value="auto" selected class="astro-4yphtoen">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg> </label>  </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script>   </div>  </div> </div> </div> </nav> <div class="main-frame astro-vrdttmbt">  <script type="module">const a=document.getElementById("starlight__sidebar"),n=a?.querySelector("sl-sidebar-state-persist"),o="sl-sidebar-state",i=()=>{let t=[];const e=n?.dataset.hash||"";try{const s=sessionStorage.getItem(o),r=JSON.parse(s||"{}");Array.isArray(r.open)&&r.hash===e&&(t=r.open)}catch{}return{hash:e,open:t,scroll:a?.scrollTop||0}},c=t=>{try{sessionStorage.setItem(o,JSON.stringify(t))}catch{}},d=()=>c(i()),l=(t,e)=>{const s=i();s.open[e]=t,c(s)};n?.addEventListener("click",t=>{if(!(t.target instanceof Element))return;const e=t.target.closest("summary")?.closest("details");if(!e)return;const s=e.querySelector("sl-sidebar-restore"),r=parseInt(s?.dataset.index||"");isNaN(r)||l(!e.open,r)});addEventListener("visibilitychange",()=>{document.visibilityState==="hidden"&&d()});addEventListener("pageHide",d);</script> <div class="lg:sl-flex astro-67yu43on"> <aside class="right-sidebar-container print:hidden astro-67yu43on"> <div class="right-sidebar astro-67yu43on"> <div class="lg:sl-hidden astro-pb3aqygn"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-doynk5tl"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-doynk5tl"><details id="starlight__mobile-toc" class="astro-doynk5tl"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-doynk5tl"><span class="toggle sl-flex astro-doynk5tl">On this page<svg aria-hidden="true" class="caret astro-doynk5tl astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></span><span class="display-current astro-doynk5tl"></span></summary><div class="dropdown astro-doynk5tl"><ul class="isMobile astro-g2bywc46" style="--depth: 0;"> <li class="astro-g2bywc46" style="--depth: 0;"> <a href="#_top" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#1-introduction" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">1. Introduction</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#11-why-this-low-level-design-document" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1.1 Why this Low-Level Design Document?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#12-scope" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1.2 Scope</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2-technical-details" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2. Technical Details</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#21-data-overview" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.1 Data Overview</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#22-daily-activity-table" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.2 Daily Activity table:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#23-total-activity-table" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.3 Total Activity table:</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#3-proposed-solution" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">3. Proposed Solution</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#31a-data-collection-face" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.1(A) Data collection Face</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#31b-data-collection-face" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.1(B) Data Collection Face</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#32-data-collection-pose" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.2 Data Collection Pose:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#33-training-the-model" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.3 Training the model:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#34-training-the-face-recognition-model" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.4 Training the Face Recognition Model:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#35-training-pose-classification-model" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.5 Training Pose Classification Model:</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#4-hosting" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">4. Hosting:</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#41-things-to-keep-in-mind-when-hosting" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.1 Things to keep in mind when hosting:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#42-hosting-platforms" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.2 Hosting Platforms:</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#5-prediction" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">5. Prediction:</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#51-data-collection" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.1 Data Collection:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#52-pose-landmark-calculation" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.2 Pose Landmark Calculation:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#53-packet-encoding-and-transmission" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.3 Packet Encoding and Transmission:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#54-backend-processing" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.4 Backend Processing:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#55-database-handling" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.5 Database Handling:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#56-results" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.6 Results:</span> </a>  </li> </ul>  </li> </ul> </div></details></nav></mobile-starlight-toc><script type="module" src="/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.C181hMzK.js"></script></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-pb3aqygn"><div class="sl-container astro-pb3aqygn"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-g2bywc46" style="--depth: 0;"> <li class="astro-g2bywc46" style="--depth: 0;"> <a href="#_top" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#1-introduction" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">1. Introduction</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#11-why-this-low-level-design-document" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1.1 Why this Low-Level Design Document?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#12-scope" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1.2 Scope</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2-technical-details" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2. Technical Details</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#21-data-overview" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.1 Data Overview</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#22-daily-activity-table" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.2 Daily Activity table:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#23-total-activity-table" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.3 Total Activity table:</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#3-proposed-solution" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">3. Proposed Solution</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#31a-data-collection-face" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.1(A) Data collection Face</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#31b-data-collection-face" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.1(B) Data Collection Face</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#32-data-collection-pose" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.2 Data Collection Pose:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#33-training-the-model" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.3 Training the model:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#34-training-the-face-recognition-model" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.4 Training the Face Recognition Model:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#35-training-pose-classification-model" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.5 Training Pose Classification Model:</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#4-hosting" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">4. Hosting:</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#41-things-to-keep-in-mind-when-hosting" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.1 Things to keep in mind when hosting:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#42-hosting-platforms" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.2 Hosting Platforms:</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#5-prediction" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">5. Prediction:</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#51-data-collection" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.1 Data Collection:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#52-pose-landmark-calculation" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.2 Pose Landmark Calculation:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#53-packet-encoding-and-transmission" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.3 Packet Encoding and Transmission:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#54-backend-processing" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.4 Backend Processing:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#55-database-handling" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.5 Database Handling:</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#56-results" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.6 Results:</span> </a>  </li> </ul>  </li> </ul> </nav></starlight-toc><script type="module" src="/_astro/TableOfContents.astro_astro_type_script_index_0_lang.CKWWgpjV.js"></script></div></div> </div> </aside> <div class="main-pane astro-67yu43on">  <main data-pagefind-body class="astro-bguv2lll" lang="en" dir="ltr">    <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <h1 id="_top" class="astro-j6tvhyss">Low-Level Design Document</h1>  </div> </div>  <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <div class="sl-markdown-content"> <div class="sl-heading-wrapper level-h2"><h2 id="1-introduction">1. Introduction</h2><a class="sl-anchor-link" href="#1-introduction"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “1. Introduction”</span></a></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="11-why-this-low-level-design-document">1.1 Why this Low-Level Design Document?</h3><a class="sl-anchor-link" href="#11-why-this-low-level-design-document"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “1.1 Why this Low-Level Design Document?”</span></a></div>
+<p>The purpose of this Low-Level Design Document is to provide a detailed description of the “Company Work Environment Management” computer vision system. It will explain the purpose and features of the system, its technical requirements, data requirements, deployment strategy, performance metrics, and key performance indicators. This document is intended for both the stakeholders and the developers of the system and will serve as a guide for the implementation of the system.</p>
+<p>The “Company Work Environment Management” system aims to improve employee attendance tracking and performance evaluation through the use of advanced face recognition technology and machine learning algorithms. By analyzing employee activity data, the system can provide insights into employee behavior and productivity, allowing for better work environment management.</p>
+<p>This Low-Level Design Document is an essential component of the system development process, providing a comprehensive overview of the system’s architecture and functionality. It will serve as a reference point for developers, allowing them to ensure that the system is implemented correctly.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="12-scope">1.2 Scope</h3><a class="sl-anchor-link" href="#12-scope"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “1.2 Scope”</span></a></div>
+<p>The scope of this project is to develop a computer vision system named “Company Work Environment Management”. The system will use advanced face recognition technology to improve employee attendance tracking and performance evaluation. The system will utilize a <strong>Cassandra NoSQL database</strong> to store and analyze employee activity data. The system will offer a modern and efficient solution to traditional attendance tracking and enhance the overall work environment management process. The system will use <strong>Machine learning</strong> for predictions and <strong>Deep Learning</strong> for detection. The system will be compatible with various platforms and will be deployable on different environments. The system will have user-friendly dashboards that will display <strong>Key Performance Indicators (KPIs)</strong> for easy monitoring and decision making. The primary objective of the system is to provide accurate attendance tracking, improve performance evaluation, maintain employee privacy and enhance the overall work environment management process.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="2-technical-details">2. Technical Details</h2><a class="sl-anchor-link" href="#2-technical-details"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “2. Technical Details”</span></a></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="21-data-overview">2.1 Data Overview</h3><a class="sl-anchor-link" href="#21-data-overview"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “2.1 Data Overview”</span></a></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="22-daily-activity-table">2.2 <strong>Daily Activity table:</strong></h3><a class="sl-anchor-link" href="#22-daily-activity-table"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “2.2 Daily Activity table:”</span></a></div>
+<p><img alt="Introduction Diagram" title="Introduction Diagram" loading="lazy" decoding="async" fetchpriority="auto" width="1568" height="746" src="/_astro/lld_data1.BMmMc1AI_1aImb9.webp" ></p>
+<p><strong>Calculating Daily Activity</strong>:</p>
+<ul>
+<li>The daily activity table stores the total duration of each pose for each employee, updated on a daily basis. To calculate the daily activity, we use the duration calculation function that is triggered every time a prediction is made. This function receives the predicted pose and the user ID as input, and checks if the pose has changed since the last prediction for the same user. If the pose is the same, the function updates the duration value for that pose and user ID combination by adding the time elapsed since the last prediction. If the pose is different, the function adds a new row to the daily activity table with the pose, user ID, and duration values for the previous pose, and starts tracking the duration for the new pose.</li>
+</ul>
+<div class="sl-heading-wrapper level-h3"><h3 id="23-total-activity-table">2.3 <strong>Total Activity table:</strong></h3><a class="sl-anchor-link" href="#23-total-activity-table"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “2.3 Total Activity table:”</span></a></div>
+<p><img alt="Introduction Diagram" title="Introduction Diagram" loading="lazy" decoding="async" fetchpriority="auto" width="1588" height="298" src="/_astro/lld_data2.8QiA0VAk_Z13fuQN.webp" ></p>
+<p><strong>Calculating Total Activity Table:</strong></p>
+<ul>
+<li>
+<p>The system updates the “Total Activity” table every time a new prediction is made, along with updating the “Daily Activity” table. The “Total Activity” table keeps track of the total duration of all the activities performed by an employee over time, whereas the “Daily Activity” table keeps track of the activity performed by the employee for a particular day.</p>
+</li>
+<li>
+<p>Every time a new prediction is made, the system calculates the duration for the current activity and updates the “Daily Activity” table with the new duration. At the same time, the system also retrieves the total duration for the current activity from the “Total Activity” table for that particular employee and updates it by adding the new duration. Finally, the updated total duration is stored back in the “Total Activity” table for that employee.</p>
+</li>
+<li>
+<p>This approach ensures that the “Total Activity” table is constantly updated, and the information is always up-to-date.</p>
+</li>
+</ul>
+<div class="sl-heading-wrapper level-h2"><h2 id="3-proposed-solution">3. Proposed Solution</h2><a class="sl-anchor-link" href="#3-proposed-solution"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “3. Proposed Solution”</span></a></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="31a-data-collection-face">3.1(A) Data collection Face</h3><a class="sl-anchor-link" href="#31a-data-collection-face"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “3.1(A) Data collection Face”</span></a></div>
+<ol>
+<li><strong>Data collection using mediapipe (For Training, [initial stage]):</strong></li>
+</ol>
+<ul>
+<li>A computer vision system is set up to capture video footage of faces.</li>
+<li>Mediapipe library is used to extract facial landmarks. These landmarks are 3D points that represent specific facial features such as eyes, nose, mouth, etc.</li>
+<li>There are 468 facial landmarks in total, each with an x, y, and z coordinate as well as a visibility confidence score.</li>
+<li>These landmarks are saved as a set of numerical values (i.e. the x, y, z coordinates) along with their corresponding confidence scores in a CSV file.</li>
+</ul>
+<ol start="2">
+<li>
+<p><strong>Labeling the data:</strong></p>
+<ul>
+<li>In order to train a machine learning model, it’s necessary to have labeled data.</li>
+<li>For facial recognition, the labels would typically be the names or identities of the people in the video footage.</li>
+<li>The labeled data is added to the CSV file in a separate column.</li>
+</ul>
+</li>
+<li>
+<p><strong>Data cleaning and preprocessing:</strong></p>
+<ul>
+<li>Before training the model, the data needs to be cleaned and preprocessed.</li>
+<li>This involves removing any incomplete or inconsistent data points, normalizing the data, and splitting the data into training and testing sets.</li>
+</ul>
+</li>
+<li>
+<p><strong>Model evaluation:</strong></p>
+<ul>
+<li>Once the model is trained, it needs to be evaluated to see how well it performs on new data.</li>
+<li>This involves testing the model on a separate set of data (i.e. the testing set) and measuring its accuracy and other performance metrics.</li>
+<li>If the model performs well, it can be deployed for use in facial recognition applications.</li>
+</ul>
+</li>
+</ol>
+<div class="sl-heading-wrapper level-h3"><h3 id="31b-data-collection-face">3.1(B) Data Collection Face</h3><a class="sl-anchor-link" href="#31b-data-collection-face"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “3.1(B) Data Collection Face”</span></a></div>
+<ol>
+<li>
+<p><strong>Data collection using Mtcnn or Dllib:</strong></p>
+<ul>
+<li>A computer vision system is set up to capture video footage of faces.</li>
+<li>Mtcnn (Multi-Task Cascaded Convolutional Neural Networks) or Dllib (Deep Learning Library for Face Detection) is used to detect faces within the footage.</li>
+<li>The detected faces are then cropped from the rest of the background to create a standardized dataset of face images.</li>
+</ul>
+</li>
+<li>
+<p><strong>Facial embeddings using facenet:</strong></p>
+<ul>
+<li>Facenet is a deep learning model that creates numerical representations (embeddings) of facial features.</li>
+<li>These embeddings can be used for tasks such as facial recognition, face clustering, and face verification.</li>
+<li>For data collection, facenet is used to generate embeddings of the cropped face images.</li>
+<li>These embeddings are saved as a set of numerical values in a CSV file.</li>
+</ul>
+</li>
+<li>
+<p><strong>Labeling the data:</strong></p>
+<ul>
+<li>In order to train a machine learning model, it’s necessary to have labeled data.</li>
+<li>For facial recognition, the labels would typically be the names or identities of the people in the video footage.</li>
+<li>The labeled data is added to the CSV file in a separate column.</li>
+</ul>
+</li>
+<li>
+<p><strong>Data cleaning and preprocessing:</strong></p>
+<ul>
+<li>Before training the model, the data needs to be cleaned and preprocessed.</li>
+<li>This involves removing any incomplete or inconsistent data points, normalizing the data, and splitting the data into training and testing sets.</li>
+</ul>
+</li>
+</ol>
+<div class="sl-heading-wrapper level-h3"><h3 id="32-data-collection-pose">3.2 Data Collection Pose:</h3><a class="sl-anchor-link" href="#32-data-collection-pose"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “3.2 Data Collection Pose:”</span></a></div>
+<p>The data collection process for capturing and labeling pose information involves the following steps:</p>
+<ol>
+<li>
+<p><strong>Open Video Frame:</strong></p>
+<ul>
+<li>The process begins by opening a video frame using the OpenCV library. The video frame serves as the input source for pose detection and landmark extraction.</li>
+</ul>
+</li>
+<li>
+<p><strong>Pose Landmark Detection:</strong></p>
+<ul>
+<li>The Mediapipe library is employed to detect and locate pose landmarks in the video frame.</li>
+<li>Pose landmarks refer to specific points on the body, such as wrists, elbows, shoulders, knees, and other key joints.</li>
+<li>By utilizing advanced algorithms, Mediapipe accurately identifies these landmark points and provides their coordinates in the form of (x, y, z) along with a visibility score.</li>
+<li>The visibility score indicates the confidence level of the detection, indicating whether the landmark is clearly visible or partially occluded.</li>
+</ul>
+</li>
+<li>
+<p><strong>Landmark Data Compilation:</strong></p>
+<ul>
+<li>The detected pose landmark data is then compiled and organized into a structured format, typically a CSV (comma-separated values) file.</li>
+<li>Each row in the CSV file represents a specific frame or instance, while the columns correspond to different pose landmarks and their respective coordinates and visibility scores.</li>
+<li>The compiled CSV file acts as a labeled dataset, with each row containing the pose landmark information necessary for training a specific pose.</li>
+</ul>
+</li>
+</ol>
+<p>The data collection process for pose involves utilizing the OpenCV library to open a video frame, leveraging the Mediapipe library for pose landmark detection, compiling the landmark data into a structured format (such as a CSV file), and finally using this labeled dataset to train a pose estimation model. This process forms the foundation for capturing and analyzing human poses.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="33-training-the-model">3.3 Training the model:</h3><a class="sl-anchor-link" href="#33-training-the-model"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “3.3 Training the model:”</span></a></div>
+<ol>
+<li><strong>Artificial Neural Network (ANN):</strong></li>
+</ol>
+<ul>
+<li>ANNs are a type of machine learning algorithm that can learn highly complex relationships between inputs and outputs. They consist of multiple layers of interconnected neurons that process the input data and generate output predictions.
+<ul>
+<li><strong>Pros:</strong> ANNs can achieve high accuracy and generalize well to new data, making them well-suited for classification problems like face recognition. They are also well-suited for data with high dimensions, such as the 468 3D facial landmarks obtained from Mediapipe.</li>
+<li><strong>Cons:</strong> ANNs can be computationally expensive and require more processing power, which means real-time prediction may not be feasible. One of the most notable disadvantages of ANNs is that they are prone to overfitting, which occurs when the model is trained on noise or irrelevant features in the data.</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li><strong>K-nearest Neighbors (KNN):</strong></li>
+</ol>
+<ul>
+<li>KNN is a non-parametric, lazy learning algorithm that deals with comparing the current tuple of the dataset (in our case, a face) to each face in the registry and outputs the most similar face.
+<ul>
+<li><strong>Pros:</strong> KNN can be an ideal solution for the problem of face recognition because it does not make any assumptions about the underlying distribution of the data and can handle both linear and non-linear relationships between the input features.</li>
+<li><strong>Cons:</strong> KNN is a non-trainable model and calculates the distances at the time of prediction, which can be computationally slow when more faces are present in the registry.</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li><strong>Support Vector Machine (SVM):</strong></li>
+</ol>
+<ul>
+<li>SVMs are a popular machine learning algorithm that can work well for problems involving distance metrics. They are commonly used in classification tasks where the goal is to separate data points into different classes or categories, which makes them a good solution for our problem of classifying faces.
+<ul>
+<li><strong>Pros:</strong> One of the advantages of SVMs is that they have a less tradeoff between accuracy and performance, meaning that they can achieve high accuracy without sacrificing performance. Another advantage of SVMs is that they are lightweight for prediction because they only have to calculate for k numbers (number of data points that can separate the classified group) of data points defined at the time of training. These data points are known as support vectors.</li>
+<li><strong>Cons:</strong> SVMs can handle high-dimensional data and can learn non-linear relationships between the input features.</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li><strong>XG-BOOST:</strong></li>
+</ol>
+<ul>
+<li>XGBoost is a popular machine learning algorithm known for its high performance and effectiveness in various domains. It is an optimized implementation of the gradient boosting framework, which combines multiple weak learners to create a powerful ensemble model.
+<ul>
+<li><strong>Pros:</strong> XGBoost can capture intricate patterns and complex relationships in the data. It has the capability to handle both linear and non-linear relationships, making it suitable for our use case. XGBoost offers various regularization techniques such as L1 and L2 regularization, which help prevent overfitting and improve generalization performance. Regularization techniques can also assist in handling noisy or irrelevant features in the data.</li>
+<li><strong>Cons:</strong> XGBoost can be computationally expensive, especially when dealing with large datasets and complex models. Training an XGBoost model with numerous features and deep trees may require substantial computational resources, but it can be optimized with proper parameters.</li>
+</ul>
+</li>
+</ul>
+<div class="sl-heading-wrapper level-h3"><h3 id="34-training-the-face-recognition-model">3.4 Training the Face Recognition Model:</h3><a class="sl-anchor-link" href="#34-training-the-face-recognition-model"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “3.4 Training the Face Recognition Model:”</span></a></div>
+<p>In the face recognition pipeline, the first step is to train the model using face embeddings. Face embeddings are numerical representations of faces that capture the unique features and characteristics of each individual’s face. During the data collection phase, we collected a dataset that contains both the face embeddings and their corresponding labels (identities).</p>
+<ul>
+<li>
+<p>To train the face recognition model, we utilized a <strong>Support Vector Classifier (SVC)</strong> with a <strong>linear kernel</strong>.</p>
+<p>The training process involved the following steps:</p>
+<ol>
+<li>
+<p><strong>Data Preparation:</strong></p>
+<ul>
+<li>We organized the collected dataset, ensuring that each face embedding was associated with the correct label or identity.</li>
+<li>The dataset was split into a training set and a validation set to evaluate the model’s performance during training.</li>
+</ul>
+</li>
+<li>
+<p><strong>Model Training:</strong></p>
+<ul>
+<li>
+<p>We instantiated an SVC model with a linear kernel.</p>
+<p><strong>Reason for the linear kernel:</strong></p>
+<ul>
+<li><strong>Computational Efficiency:</strong> The linear kernel is computationally efficient compared to other kernel functions, such as polynomial or radial basis function (RBF) kernels. Since face recognition tasks often involve processing a large number of face embeddings and performing real-time predictions, using a linear kernel helps optimize the computational efficiency of the algorithm. This is particularly beneficial when deploying the face recognition system in resource-constrained environments or when dealing with a high volume of face recognition requests.</li>
+<li><strong>Avoiding Overfitting:</strong> The linear kernel tends to have a lower risk of overfitting compared to more complex kernels. Overfitting occurs when a model becomes too specialized to the training data and fails to generalize well to unseen data. By using a linear kernel, which has a simpler decision boundary, we can reduce the complexity of the model and mitigate the risk of overfitting. This helps ensure that the trained SVC model can accurately recognize faces not only from the training data but also from unseen faces in real-world scenarios.</li>
+<li><strong>Interpretability and Transparency:</strong> The linear kernel offers better interpretability and transparency compared to non-linear kernels. The decision boundary created by a linear kernel is a hyperplane that can be easily visualized and understood. This can be valuable for debugging and analyzing the model’s behavior, as well as for explaining the face recognition system’s predictions to stakeholders or end-users.</li>
+<li><strong>Computational Efficiency in Cloud Computing Environments:</strong> When deploying the face recognition model in a cloud computing environment with limited computational resources, efficiency becomes a crucial factor. Linear kernels are computationally less demanding compared to non-linear kernels, such as polynomial or RBF kernels. This computational efficiency allows the face recognition model to run smoothly and efficiently in cloud environments, even when multiple models or services are running concurrently. By using a linear kernel, we can optimize resource utilization and ensure that the face recognition system operates efficiently without compromising performance. This is particularly important in scenarios where real-time response and scalability are essential, such as large-scale face recognition applications or systems with high user traffic.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Model Evaluation:</strong></p>
+<ul>
+<li>During the training process, we regularly evaluated the model’s performance using the validation set.</li>
+<li>Evaluation metrics such as accuracy, precision, recall, and F1 score were computed to assess the model’s ability to correctly classify faces.</li>
+</ul>
+</li>
+<li>
+<p><strong>Model Persistence:</strong></p>
+<ul>
+<li>Once the model training was completed, we saved the trained SVC model to disk for future use.</li>
+<li>The saved model could be loaded and used for face recognition tasks in the prediction phase.</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<div class="sl-heading-wrapper level-h3"><h3 id="35-training-pose-classification-model">3.5 Training Pose Classification Model:</h3><a class="sl-anchor-link" href="#35-training-pose-classification-model"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “3.5 Training Pose Classification Model:”</span></a></div>
+<p>In the pose recognition stage of our pipeline, we aimed to train a model that could accurately classify different body poses based on input data. For this task, we
+utilized the <strong>XGBoost</strong> algorithm, a popular gradient boosting framework known for
+its efficiency and effectiveness in handling classification problems.</p>
+<div class="sl-heading-wrapper level-h5"><h5 id="to-train-the-pose-recognition-model"><strong>To train the pose recognition model.</strong></h5><a class="sl-anchor-link" href="#to-train-the-pose-recognition-model"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “To train the pose recognition model.”</span></a></div>
+<p>The training process involved the following steps:</p>
+<ol>
+<li>
+<p><strong>Data Collection:</strong></p>
+<ul>
+<li>We collected a dataset consisting of labeled images or videos that depict various body poses.</li>
+<li>Each sample in the dataset contains the input image or video frame and the corresponding label indicating the pose.</li>
+</ul>
+</li>
+<li>
+<p><strong>Data Preprocessing:</strong></p>
+<ul>
+<li>
+<p>Before training the pose recognition model, we performed data preprocessing to enhance the quality and suitability of the data.</p>
+</li>
+<li>
+<p>The preprocessing steps included:</p>
+<p><strong>Removal of Unused Points:</strong></p>
+<ul>
+<li>In the pose data, there might be certain key points or landmarks that are not relevant for the pose recognition task.</li>
+<li>We can identify and remove these unused points from the dataset to reduce noise and focus on the essential features.</li>
+</ul>
+<p><strong>Dimensionality Reduction with PCA:</strong></p>
+<ul>
+<li>Pose data often contains a high-dimensional feature space due to the large number of key points or landmarks.</li>
+<li>To reduce the dimensionality of the data and remove redundant information, we can apply Principal Component Analysis (PCA).</li>
+<li>PCA transforms the original features into a lower-dimensional representation while preserving the most significant variations in the data.</li>
+<li>By reducing the dimensionality, we can aim to improve computational efficiency and mitigate the curse of dimensionality.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Training Set and Validation Set Split:</strong></p>
+<ul>
+<li>The dataset was divided into a training set and a validation set.</li>
+<li>The training set was used to train the model, while the validation set was used to assess the model’s performance during training and aid in hyperparameter tuning.</li>
+</ul>
+</li>
+<li>
+<p><strong>Model Training:</strong></p>
+<p><strong>1. XGBoost Training:</strong></p>
+<ul>
+<li>
+<p>We trained an XGBoost classifier, which is a gradient boosting framework known for its high performance in classification tasks.</p>
+</li>
+<li>
+<p>XGBoost combines multiple weak learners (decision trees) to create a strong predictive model.</p>
+<ul>
+<li>In our case we can use n_estimators 100</li>
+</ul>
+</li>
+<li>
+<p>The XGBoost model was trained on the preprocessed pose data, with the extracted features as input and the corresponding pose labels as the target variable.</p>
+</li>
+<li>
+<p>The learning rate controls the step size during each boosting iteration.</p>
+<ul>
+<li>We selected a moderate learning rate of 0.1 to balance model performance and training speed.</li>
+</ul>
+</li>
+<li>
+<p>The maximum depth of a tree defines the level of interactions between features in the model. A higher max depth allows the model to capture more complex relationships in the data, but it also increases the risk of overfitting.</p>
+<ul>
+<li>We chose a relatively shallow max depth of 5 to prevent overfitting and promote better generalization.</li>
+</ul>
+</li>
+<li>
+<p>The colsample_bytree parameter determines the fraction of features to consider for each tree. A lower value reduces the risk of overfitting by introducing more randomness and diversity in the trees.</p>
+<ul>
+<li>We chose a value of 0.8, meaning that each tree considers 80% of the features, to introduce some diversity while still maintaining a good coverage of the feature space.</li>
+</ul>
+</li>
+<li>
+<p>The objective function defines the loss function to be optimized during training.</p>
+<ul>
+<li>In this case, we used the ‘multi:softmax’ objective for multi-class classification.</li>
+<li>It calculates the softmax probabilities for each class and selects the class with the highest probability as the predicted label.</li>
+</ul>
+</li>
+</ul>
+<p><strong>2. Random Forest Training:</strong></p>
+<ul>
+<li>In addition to XGBoost, we also trained a Random Forest classifier.</li>
+<li>Random Forest is an ensemble learning method that constructs multiple decision trees and combines their predictions to make a final decision.</li>
+<li>We adjusted the hyperparameters, including the number of trees and the maximum depth of trees, to achieve the best performance.</li>
+<li>The Random Forest model was trained using the pose features and labels.</li>
+</ul>
+<p><strong>3. Ensemble Technique:</strong></p>
+<ul>
+<li>To further enhance the model’s performance, we employed an ensemble technique that combined multiple classifiers.</li>
+<li>We experimented with various classifiers, including Logistic Regression, Ridge Classifier, Random Forest, and Gradient Boosting.</li>
+<li>Each classifier was trained independently on the pose data using different algorithms and hyperparameter settings.</li>
+<li>After training the individual classifiers, we evaluated their performance and selected the best-performing model for the ensemble.</li>
+</ul>
+<p><strong>4. Deep Learning with Sequential Model:</strong></p>
+<ul>
+<li>
+<p><strong>Input Layer:</strong> The input layer receives the pose data as input, with the number of input dimensions determined by the shape of the input data.</p>
+</li>
+<li>
+<p><strong>Dense Layers:</strong> The model consists of multiple dense layers with different sizes and activation functions. Each dense layer is responsible for learning and capturing specific patterns and representations from the input data. We used the ‘relu’ activation function, which introduces non-linearity to the model and helps in capturing complex relationships within the data.</p>
+</li>
+<li>
+<p><strong>Batch Normalization:</strong> Batch normalization is applied after each dense layer. It normalizes the input values by subtracting the batch mean and dividing by the batch standard deviation. This technique helps in stabilizing the learning process and improving the overall performance of the model.</p>
+</li>
+<li>
+<p><strong>Flatten Layer:</strong> The flatten layer is added to convert the multi-dimensional output from the previous layers into a flat vector. It prepares the data for the subsequent dense layers by reshaping the data into a 1D format.</p>
+</li>
+<li>
+<p><strong>Additional Dense Layer:</strong> Following the flatten layer, we added another dense layer with 32 units and ‘relu’ activation. This additional dense layer allows the model to learn more complex representations and further refine the predictions.</p>
+</li>
+<li>
+<p><strong>Dropout Layer:</strong> A dropout layer with a dropout rate of 0.5 is included to prevent overfitting. Dropout randomly sets a fraction of input units to 0 during training, which helps in regularizing the model and reducing the chances of overfitting.</p>
+</li>
+<li>
+<p><strong>Output Layer:</strong> The final dense layer has the same number of units as the number of classes in the pose dataset. The activation function used in this layer is ‘softmax’, which normalizes the output probabilities across the classes.</p>
+</li>
+<li>
+<p><strong>Model Compilation:</strong> The model is compiled using the Adam optimizer with a learning rate of 0.01. The loss function is set to ‘categorical_crossentropy’ since it is suitable for multi-class classification tasks. We also specified ‘accuracy’ as the evaluation metric to monitor the model’s performance during training.</p>
+</li>
+<li>
+<p>The chosen architecture and parameter settings were based on experimentation and empirical observations. By using multiple dense layers with varying sizes, we aimed to capture different levels of abstractions in the pose data. The inclusion of batch normalization layers helped in improving the model’s convergence and overall performance. The dropout layer mitigated overfitting by randomly dropping units during training. The ‘softmax’ activation function in the output layer ensured that the predicted probabilities were normalized across the different pose classes.</p>
+</li>
+<li>
+<p>Overall, the sequential deep learning model was designed to effectively learn and extract relevant features from the input pose data, enabling accurate classification of different poses.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Model Selection:</strong></p>
+<ul>
+<li>After training multiple models using different techniques, we evaluated their performance on validation data.</li>
+<li>Performance metrics such as accuracy, precision, recall, and F1 score were computed to assess the models’ effectiveness in pose recognition.</li>
+<li>Based on the evaluation results, we selected the best-performing model, which in this case was the XGBoost classifier.</li>
+<li>The XGBoost model demonstrated superior performance in terms of accuracy, speed and generalization ability, making it the optimal choice for pose recognition in our project.</li>
+</ul>
+</li>
+</ol>
+<div class="sl-heading-wrapper level-h2"><h2 id="4-hosting">4. Hosting:</h2><a class="sl-anchor-link" href="#4-hosting"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “4. Hosting:”</span></a></div>
+<p>Before we can move on to the prediction stage, we first need to host the web application that runs the pipeline of <strong>Face > Pose > Preprocessing > Prediction > Database Management > Cloud Services > Implementation</strong></p>
+<p>To achieve this, we will create a Flask web application using Python and JavaScript. Flask is a popular web framework for Python that allows us to create web applications easily and quickly. We will use JavaScript to capture the webcam stream from the user’s device.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="41-things-to-keep-in-mind-when-hosting"><strong>4.1 Things to keep in mind when hosting:</strong></h3><a class="sl-anchor-link" href="#41-things-to-keep-in-mind-when-hosting"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “4.1 Things to keep in mind when hosting:”</span></a></div>
+<ol>
+<li>
+<p>When hosting our face recognition application, there are technical considerations to keep in mind, especially regarding the capturing of live video from the user’s webcam. Here’s how we can address this challenge:</p>
+<p><strong>Using JavaScript for Webcam Capture:</strong> When hosting our application on a cloud platform, we cannot directly access the user’s webcam using OpenCV’s video capture methods. To overcome this limitation, we can leverage JavaScript to enable webcam access through the browser. This can be achieved using the <strong>getUserMedia()</strong> function, which allows us to capture video and audio from the user’s device.</p>
+<p><strong>Encoding and Sending Packets:</strong> Once we have captured the video stream using JavaScript, we need to encode and send the video packets from the client-side (frontend) to the server-side (backend) where our Flask application resides. This can be done by encoding the video frames into a suitable format, such as base64 or binary, and sending them as packets to the backend using <strong>AJAX or WebSocket</strong> communication.</p>
+<p><strong>Processing and Decoding Packets:</strong> On the backend side, we receive the encoded video packets sent by the client. We then decode the packets to retrieve the video frames. Once the frames are decoded, we can perform the necessary processing steps, such as face detection, pose estimation, and preprocessing, using the appropriate algorithms and libraries.</p>
+<p><strong>Sending Results back to the Client:</strong> After processing the video frames, we generate the desired results, such as recognized faces or identified activities. We then send the results back to the client-side (frontend) using a similar mechanism as before, encoding the results into packets and transmitting them through <strong>AJAX or WebSocket</strong> communication.</p>
+</li>
+<li>
+<p><strong>Webcam Capture and SSL Certificate:</strong> To capture webcam frames and landmarks using the <strong>getUserMedia()</strong> function in JavaScript, it is essential to have a secure connection with an SSL certificate. Without an SSL certificate, modern web browsers may block access to the camera, as the API requires a secure context.</p>
+<p><strong>To enable a secure connection, we need to obtain an SSL certificate. In the case of hosting our application on AWS EC2, the IP address provided by AWS does not include an SSL certificate. Therefore, we can acquire the SSL certificate from a different certificate provider. In this documentation, we will use Let’s Encrypt, a widely-used certificate authority, to generate our SSL certificate.</strong></p>
+<p><strong>Obtaining an SSL Certificate from Let’s Encrypt:</strong> To obtain an SSL certificate from Let’s Encrypt, we need to follow a set of steps. These steps generally involve the following:</p>
+<ul>
+<li>Setting up a web server, such as Nginx or Apache, to serve our application.</li>
+<li>Installing Certbot, a tool provided by Let’s Encrypt, on our server.</li>
+<li>Running Certbot to generate and obtain the SSL certificate for our domain.</li>
+<li>Configuring the web server to use the SSL certificate and enable HTTPS.</li>
+</ul>
+<p>By following this process, we can secure our frontend page with an SSL certificate, allowing us to access the webcam frames and landmarks using the <strong>getUserMedia()</strong> function.</p>
+<p><strong>Configuring Web Server and HTTPS:</strong> After obtaining the SSL certificate, we need to configure our web server to use HTTPS. This involves modifying the server configuration file, such as Nginx or Apache, to enable HTTPS connections. The configuration typically includes specifying the SSL certificate file path and configuring the server to listen on the appropriate HTTPS port (usually port 443).</p>
+<p><strong>Securing Communication and Data Privacy:</strong> With the SSL certificate in place and HTTPS enabled, our frontend page is now secure, ensuring the privacy and integrity of the data transmitted between the client (browser) and server. This is crucial when capturing webcam frames and transmitting them to the backend for further processing.</p>
+</li>
+</ol>
+<p>By following these steps and securing our frontend page with an SSL certificate, we can ensure that the <strong>getUserMedia()</strong> function works properly, allowing us to initialize and capture frames from the user’s webcam. This enhances the functionality and security of our face recognition application.</p>
+<p>To deploy our Flask application, we can choose from various hosting platforms like <strong>Amazon Web Services (AWS)</strong>, <strong>Microsoft Azure</strong>, <strong>Heroku</strong>, or <strong>Replit</strong>.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="42-hosting-platforms"><strong>4.2 Hosting Platforms:</strong></h3><a class="sl-anchor-link" href="#42-hosting-platforms"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “4.2 Hosting Platforms:”</span></a></div>
+<p>To deploy your Flask application and enable webcam access for users, we will utilize <strong>Amazon Web Services (AWS)</strong> and set up an <strong>Ubuntu virtual machine (VM)</strong> as the hosting environment.</p>
+<ol>
+<li>
+<p><strong>Launch an Ubuntu VM on AWS:</strong></p>
+<ul>
+<li>Sign in to the AWS Management Console and navigate to the EC2 service.</li>
+<li>Launch a new Ubuntu EC2 instance, selecting the desired instance type, storage, and networking options.</li>
+<li>Configure security group rules to allow incoming traffic on port 80 (HTTP) and 443 (HTTPS) for web access.</li>
+<li>Assign an Elastic IP to the VM for a static public IP address.</li>
+</ul>
+</li>
+<li>
+<p><strong>Set Up Ubuntu VM:</strong></p>
+<ul>
+<li>Connect to the Ubuntu VM via SSH using a tool like PuTTY or the terminal.</li>
+<li>Update the system packages using the <strong>apt-get</strong> package manager.</li>
+<li>Install Python and the necessary dependencies, including Flask and any additional libraries required for your application.</li>
+<li>Clone your Flask application repository onto the VM.</li>
+</ul>
+</li>
+<li>
+<p><strong>Configure Nginx as Reverse Proxy:</strong></p>
+<ul>
+<li>Install Nginx web server on the Ubuntu VM using <strong>apt-get</strong>.</li>
+<li>Configure Nginx to act as a reverse proxy for your Flask application.</li>
+<li>Set up server blocks in the Nginx configuration file to define the domain or subdomain for your application and forward requests to the Flask application running on port 5000.</li>
+</ul>
+</li>
+<li>
+<p><strong>Obtain SSL Certificate:</strong></p>
+<ul>
+<li>Use Let’s Encrypt, a free certificate authority, to obtain an SSL certificate for your domain or subdomain.</li>
+<li>Install Certbot and run the necessary commands to generate and install the SSL certificate on the Nginx server.</li>
+<li>Configure Nginx to use the SSL certificate for secure HTTPS communication.</li>
+</ul>
+</li>
+<li>
+<p><strong>Configure DNS:</strong></p>
+<ul>
+<li>In DNS provider’s control panel, create an A record that points domain or subdomain to the Elastic IP address of AWS VM.</li>
+<li>Set up the required DNS settings to ensure the domain or subdomain resolves to the correct IP address.</li>
+</ul>
+</li>
+<li>
+<p><strong>Start the Flask Application:</strong></p>
+<ul>
+<li>Activate a virtual environment and install the project dependencies using pip.</li>
+<li>Run the Flask application using Gunicorn or a similar WSGI server.</li>
+<li>Monitor the application logs and ensure it is running without any issues.</li>
+</ul>
+</li>
+</ol>
+<p>By following these steps, we can successfully deploy our Flask application on an AWS Ubuntu VM, configure Nginx as a reverse proxy, obtain an SSL certificate for secure communication, and ensure proper DNS configuration for our domain or subdomain. This setup enables users to access our application securely over HTTPS, granting webcam access and enabling the processing of live video streams.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="5-prediction">5. Prediction:</h2><a class="sl-anchor-link" href="#5-prediction"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “5. Prediction:”</span></a></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="51-data-collection">5.1 <strong>Data Collection:</strong></h3><a class="sl-anchor-link" href="#51-data-collection"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “5.1 Data Collection:”</span></a></div>
+<ul>
+<li>The data is collected from the web using a JavaScript function, specifically the <strong>getUserMedia()</strong> function. This allows access to the user’s camera stream and captures frames for further processing. This approach is necessary because direct camera access using OpenCV functions is restricted in a cloud environment.</li>
+</ul>
+<div class="sl-heading-wrapper level-h3"><h3 id="52-pose-landmark-calculation">5.2 <strong>Pose Landmark Calculation:</strong></h3><a class="sl-anchor-link" href="#52-pose-landmark-calculation"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “5.2 Pose Landmark Calculation:”</span></a></div>
+<ul>
+<li>The captured frames are processed using the MediaPipe JavaScript library to calculate the pose landmarks. This involves identifying and tracking key points on the user’s body, such as joints and body parts. The pose landmarks provide valuable information about the user’s body posture and movements.</li>
+</ul>
+<div class="sl-heading-wrapper level-h3"><h3 id="53-packet-encoding-and-transmission">5.3 <strong>Packet Encoding and Transmission:</strong></h3><a class="sl-anchor-link" href="#53-packet-encoding-and-transmission"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “5.3 Packet Encoding and Transmission:”</span></a></div>
+<ul>
+<li>Once the pose landmarks are calculated, the data is encoded into packets and sent to the backend (Python) using <strong>AJAX and WebSockets</strong>. This communication mechanism ensures efficient and real-time transmission of the data from the frontend (JavaScript) to the backend (Python).</li>
+</ul>
+<div class="sl-heading-wrapper level-h3"><h3 id="54-backend-processing">5.4 <strong>Backend Processing:</strong></h3><a class="sl-anchor-link" href="#54-backend-processing"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “5.4 Backend Processing:”</span></a></div>
+<ul>
+<li>
+<p>The data received by the backend (Python) through Flask is then fed into the prediction pipeline. In this pipeline, several steps are performed to extract relevant information and make predictions.</p>
+<p><strong>Face Recognition:</strong> The face embeddings are extracted from the captured frames. These embeddings represent unique features of the user’s face. The embeddings are compared with past records or a pre-trained model to identify and recognize the user’s face. This enables the system to associate the current user with their identity.</p>
+<p><strong>Pose Prediction:</strong> The pose landmarks obtained from the frontend are utilized to predict the user’s body posture and movements. This prediction can include classifying the user’s pose into predefined categories such as sitting, standing, or walking. It provides valuable insights into the user’s actions and behaviors.</p>
+</li>
+</ul>
+<div class="sl-heading-wrapper level-h3"><h3 id="55-database-handling">5.5 <strong>Database Handling:</strong></h3><a class="sl-anchor-link" href="#55-database-handling"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “5.5 Database Handling:”</span></a></div>
+<ul>
+<li>The results of the predictions, including the recognized face and the predicted pose, are sent to a database handler library. This library is responsible for storing the records in a database. The recorded data can be used for further analysis, tracking user activity, or generating reports. Additionally, the results can be displayed on the user application, allowing real-time feedback and interaction with the system.</li>
+</ul>
+<div class="sl-heading-wrapper level-h3"><h3 id="56-results">5.6 <strong>Results:</strong></h3><a class="sl-anchor-link" href="#56-results"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “5.6 Results:”</span></a></div>
+<ul>
+<li>The results are then sent to Application (frontend) and shown to the user with <strong>Ajax</strong>.</li>
+<li>Using Ajax here because of uninterrupted updating DOM.</li>
+</ul> </div> <footer class="sl-flex astro-3yyafb3n"> <div class="meta sl-flex astro-3yyafb3n">   </div> <div class="pagination-links print:hidden astro-u2l5gyhi" dir="ltr"> <a href="/guides/hld/" rel="prev" class="astro-u2l5gyhi"> <svg aria-hidden="true" class="astro-u2l5gyhi astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg> <span class="astro-u2l5gyhi"> Previous <br class="astro-u2l5gyhi"> <span class="link-title astro-u2l5gyhi">HLD</span> </span> </a> <a href="/guides/architecture/" rel="next" class="astro-u2l5gyhi"> <svg aria-hidden="true" class="astro-u2l5gyhi astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg> <span class="astro-u2l5gyhi"> Next <br class="astro-u2l5gyhi"> <span class="link-title astro-u2l5gyhi">Architecture</span> </span> </a> </div>   </footer>  </div> </div>   </main> </div> </div>  </div> </div>  </body></html>

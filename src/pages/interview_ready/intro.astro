@@ -1,0 +1,16 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import * as IntroDoc from '../../../introduction.md';
+
+const frontmatter = {
+  title: 'Interview Mentor Introduction',
+  description: 'Introduction and interview-ready positioning for the Interview Mentor project.',
+};
+
+const headings = IntroDoc.getHeadings();
+const Content = IntroDoc.Content;
+---
+
+<StarlightPage frontmatter={frontmatter} headings={headings}>
+  <Content />
+</StarlightPage>

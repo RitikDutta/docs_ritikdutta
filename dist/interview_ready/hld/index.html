@@ -1,0 +1,1042 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-bguv2lll"> <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Interview Mentor HLD | Designs</title><link rel="canonical" href="https://docs.ritikdutta.com/interview_ready/hld/"/><link rel="sitemap" href="/sitemap-index.xml"/><link rel="stylesheet" href="/styles.css"/><link rel="shortcut icon" href="/me2.ico" type="image/x-icon"/><meta name="generator" content="Astro v5.16.5"/><meta name="generator" content="Starlight v0.37.1"/><meta property="og:title" content="Interview Mentor HLD"/><meta property="og:type" content="article"/><meta property="og:url" content="https://docs.ritikdutta.com/interview_ready/hld/"/><meta property="og:locale" content="en"/><meta property="og:description" content="High-level design for the Interview Mentor project."/><meta property="og:site_name" content="Designs"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="High-level design for the Interview Mentor project."/><meta name="twitter:site" content="@RitikDutta7"/><script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg><svg aria-hidden="true" class="dark astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg><svg aria-hidden="true" class="auto astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></template><link rel="stylesheet" href="/_astro/print.DNXP8c50.css" media="print"><link rel="stylesheet" href="/_astro/hld.BGYTJlGT.css">
+<style>@layer starlight.components{:root{--sl-badge-default-border: var(--sl-color-accent);--sl-badge-default-bg: var(--sl-color-accent-low);--sl-badge-default-text: #fff;--sl-badge-note-border: var(--sl-color-blue);--sl-badge-note-bg: var(--sl-color-blue-low);--sl-badge-note-text: #fff;--sl-badge-danger-border: var(--sl-color-red);--sl-badge-danger-bg: var(--sl-color-red-low);--sl-badge-danger-text: #fff;--sl-badge-success-border: var(--sl-color-green);--sl-badge-success-bg: var(--sl-color-green-low);--sl-badge-success-text: #fff;--sl-badge-caution-border: var(--sl-color-orange);--sl-badge-caution-bg: var(--sl-color-orange-low);--sl-badge-caution-text: #fff;--sl-badge-tip-border: var(--sl-color-purple);--sl-badge-tip-bg: var(--sl-color-purple-low);--sl-badge-tip-text: #fff}[data-theme=light]:root{--sl-badge-default-bg: var(--sl-color-accent-high);--sl-badge-note-bg: var(--sl-color-blue-high);--sl-badge-danger-bg: var(--sl-color-red-high);--sl-badge-success-bg: var(--sl-color-green-high);--sl-badge-caution-bg: var(--sl-color-orange-high);--sl-badge-tip-bg: var(--sl-color-purple-high)}.sl-badge:where(.astro-avdet4wd){display:inline-block;border:1px solid var(--sl-color-border-badge);border-radius:.25rem;font-family:var(--sl-font-system-mono);line-height:normal;color:var(--sl-color-text-badge);background-color:var(--sl-color-bg-badge);overflow-wrap:anywhere}.sidebar-content .sl-badge:where(.astro-avdet4wd){line-height:1;font-size:var(--sl-text-xs);padding:.125rem .375rem}.sidebar-content a[aria-current=page]>.sl-badge:where(.astro-avdet4wd){--sl-color-bg-badge: transparent;--sl-color-border-badge: currentColor;color:inherit}.default:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-default-bg);--sl-color-border-badge: var(--sl-badge-default-border);--sl-color-text-badge: var(--sl-badge-default-text)}.note:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-note-bg);--sl-color-border-badge: var(--sl-badge-note-border);--sl-color-text-badge: var(--sl-badge-note-text)}.danger:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-danger-bg);--sl-color-border-badge: var(--sl-badge-danger-border);--sl-color-text-badge: var(--sl-badge-danger-text)}.success:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-success-bg);--sl-color-border-badge: var(--sl-badge-success-border);--sl-color-text-badge: var(--sl-badge-success-text)}.tip:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-tip-bg);--sl-color-border-badge: var(--sl-badge-tip-border);--sl-color-text-badge: var(--sl-badge-tip-text)}.caution:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-caution-bg);--sl-color-border-badge: var(--sl-badge-caution-border);--sl-color-text-badge: var(--sl-badge-caution-text)}.small:where(.astro-avdet4wd){font-size:var(--sl-text-xs);padding:.125rem .25rem}.medium:where(.astro-avdet4wd){font-size:var(--sl-text-sm);padding:.175rem .35rem}.large:where(.astro-avdet4wd){font-size:var(--sl-text-base);padding:.225rem .45rem}.sl-markdown-content :is(h1,h2,h3,h4,h5,h6) .sl-badge:where(.astro-avdet4wd){vertical-align:middle}}
+@layer starlight.components{.card-grid:where(.astro-zntqmydn){display:grid;grid-template-columns:100%;gap:1rem}.card-grid:where(.astro-zntqmydn)>*{margin-top:0!important}@media(min-width:50rem){.card-grid:where(.astro-zntqmydn){grid-template-columns:1fr 1fr;gap:1.5rem}.stagger:where(.astro-zntqmydn){--stagger-height: 5rem;padding-bottom:var(--stagger-height)}.stagger:where(.astro-zntqmydn)>*:nth-child(2n){transform:translateY(var(--stagger-height))}}}
+@layer starlight.components{.card:where(.astro-v5tidmuc){--sl-card-border: var(--sl-color-purple);--sl-card-bg: var(--sl-color-purple-low);border:1px solid var(--sl-color-gray-5);background-color:var(--sl-color-black);padding:clamp(1rem,calc(.125rem + 3vw),2.5rem);flex-direction:column;gap:clamp(.5rem,calc(.125rem + 1vw),1rem)}.card:where(.astro-v5tidmuc):nth-child(4n+1){--sl-card-border: var(--sl-color-orange);--sl-card-bg: var(--sl-color-orange-low)}.card:where(.astro-v5tidmuc):nth-child(4n+3){--sl-card-border: var(--sl-color-green);--sl-card-bg: var(--sl-color-green-low)}.card:where(.astro-v5tidmuc):nth-child(4n+4){--sl-card-border: var(--sl-color-red);--sl-card-bg: var(--sl-color-red-low)}.card:where(.astro-v5tidmuc):nth-child(4n+5){--sl-card-border: var(--sl-color-blue);--sl-card-bg: var(--sl-color-blue-low)}.title:where(.astro-v5tidmuc){font-weight:600;font-size:var(--sl-text-h4);color:var(--sl-color-white);line-height:var(--sl-line-height-headings);gap:1rem;align-items:center}.card:where(.astro-v5tidmuc) .icon:where(.astro-v5tidmuc){border:1px solid var(--sl-card-border);background-color:var(--sl-card-bg);padding:.2em;border-radius:.25rem;flex-shrink:0}.card:where(.astro-v5tidmuc) .body:where(.astro-v5tidmuc){margin:0;font-size:clamp(var(--sl-text-sm),calc(.5rem + 1vw),var(--sl-text-body))}}
+@layer starlight.components{svg:where(.astro-c6vsoqas){color:var(--sl-icon-color);font-size:var(--sl-icon-size, 1em);width:1em;height:1em}}
+@layer starlight.components{.sl-steps{--bullet-size: calc(var(--sl-line-height) * 1rem);--bullet-margin: .375rem;list-style:none;counter-reset:steps-counter var(--sl-steps-start, 0);padding-inline-start:0}.sl-steps>li{counter-increment:steps-counter;position:relative;padding-inline-start:calc(var(--bullet-size) + 1rem);padding-bottom:1px;min-height:calc(var(--bullet-size) + var(--bullet-margin))}.sl-steps>li+li{margin-top:0}.sl-steps>li:before{content:counter(steps-counter);position:absolute;top:0;inset-inline-start:0;width:var(--bullet-size);height:var(--bullet-size);line-height:var(--bullet-size);font-size:var(--sl-text-xs);font-weight:600;text-align:center;color:var(--sl-color-white);background-color:var(--sl-color-gray-6);border-radius:99rem;box-shadow:inset 0 0 0 1px var(--sl-color-gray-5)}.sl-steps>li:after{--guide-width: 1px;content:"";position:absolute;top:calc(var(--bullet-size) + var(--bullet-margin));bottom:var(--bullet-margin);inset-inline-start:calc((var(--bullet-size) - var(--guide-width)) / 2);width:var(--guide-width);background-color:var(--sl-color-hairline-light)}}@layer starlight.content{.sl-steps>li>:first-child{--lh: calc(1em * var(--sl-line-height));--shift-y: calc(.5 * (var(--bullet-size) - var(--lh)));transform:translateY(var(--shift-y));margin-bottom:var(--shift-y)}.sl-steps>li>:first-child:where(h1,h2,h3,h4,h5,h6){--lh: calc(1em * var(--sl-line-height-headings))}@supports (--prop: 1lh){.sl-steps>li>:first-child{--lh: 1lh}}}
+@layer starlight.components{.sl-link-button:where(.astro-xwgiixxa){align-items:center;border:1px solid transparent;border-radius:999rem;display:inline-flex;font-size:var(--sl-text-sm);gap:.5em;line-height:1.1875;outline-offset:.25rem;padding:.4375rem 1.125rem;text-decoration:none}.sl-link-button:where(.astro-xwgiixxa).primary{background:var(--sl-color-text-accent);border-color:var(--sl-color-text-accent);color:var(--sl-color-black)}.sl-link-button:where(.astro-xwgiixxa).primary:hover{color:var(--sl-color-black)}.sl-link-button:where(.astro-xwgiixxa).secondary{border-color:inherit;color:var(--sl-color-white)}.sl-link-button:where(.astro-xwgiixxa).minimal{color:var(--sl-color-white);padding-inline:0}.sl-link-button:where(.astro-xwgiixxa) svg{flex-shrink:0}@media(min-width:50rem){.sl-link-button:where(.astro-xwgiixxa){font-size:var(--sl-text-base);padding:.9375rem 1.25rem}}.sl-markdown-content .sl-link-button:where(.astro-xwgiixxa){margin-inline-end:1rem}.sl-markdown-content .sl-link-button:where(.astro-xwgiixxa):not(:where(p *)){margin-block:1rem}}
+</style><script type="module" src="/_astro/page.B1D-nYk3.js"></script></head> <body class="astro-bguv2lll"> <a href="#_top" class="astro-7q3lir66">Skip to content</a>  <div class="page sl-flex astro-vrdttmbt"> <header class="header astro-vrdttmbt"><div class="header astro-kmkmnagf"> <div class="title-wrapper sl-flex astro-kmkmnagf"> <a href="/" class="site-title sl-flex astro-m46x6ez3">  <span class="astro-m46x6ez3" translate="no"> Designs </span> </a>  </div> <div class="sl-flex print:hidden astro-kmkmnagf"> <site-search class="astro-kmkmnagf astro-v37mnknz" data-translations="{&#34;placeholder&#34;:&#34;Search&#34;}"> <button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-v37mnknz"> <svg aria-hidden="true" class="astro-v37mnknz astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"/></svg> <span class="sl-hidden md:sl-block astro-v37mnknz" aria-hidden="true">Search</span> <kbd class="sl-hidden md:sl-flex astro-v37mnknz" style="display: none;"> <kbd class="astro-v37mnknz">Ctrl</kbd><kbd class="astro-v37mnknz">K</kbd> </kbd> </button> <dialog style="padding:0" aria-label="Search" class="astro-v37mnknz"> <div class="dialog-frame sl-flex astro-v37mnknz">  <button data-close-modal class="sl-flex md:sl-hidden astro-v37mnknz"> Cancel </button> <div class="search-container astro-v37mnknz"> <div id="starlight__search" class="astro-v37mnknz"></div> </div> </div> </dialog> </site-search>  <script>
+	(() => {
+		const openBtn = document.querySelector('button[data-open-modal]');
+		const shortcut = openBtn?.querySelector('kbd');
+		if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+		const platformKey = shortcut.querySelector('kbd');
+		if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+			platformKey.textContent = '⌘';
+			openBtn.setAttribute('aria-keyshortcuts', 'Meta+K');
+		}
+		shortcut.style.display = '';
+	})();
+</script> <script type="module" src="/_astro/Search.astro_astro_type_script_index_0_lang.cjYDvRdi.js"></script>   </div> <div class="sl-hidden md:sl-flex print:hidden right-group astro-kmkmnagf"> <div class="sl-flex social-icons astro-kmkmnagf"> <a href="https://github.com/ritikdutta.com" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">GitHub</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a><a href="https://x.com/RitikDutta7" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">Twitter</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M24 4.4a10 10 0 0 1-2.83.78 5.05 5.05 0 0 0 2.17-2.79 9.7 9.7 0 0 1-3.13 1.23 4.89 4.89 0 0 0-5.94-1.03 5 5 0 0 0-2.17 2.38 5.15 5.15 0 0 0-.3 3.25c-1.95-.1-3.86-.63-5.61-1.53a14.04 14.04 0 0 1-4.52-3.74 5.2 5.2 0 0 0-.09 4.91c.39.74.94 1.35 1.61 1.82a4.77 4.77 0 0 1-2.23-.63v.06c0 1.16.4 2.29 1.12 3.18a4.9 4.9 0 0 0 2.84 1.74c-.73.22-1.5.26-2.24.12a4.89 4.89 0 0 0 4.59 3.49A9.78 9.78 0 0 1 0 19.73 13.65 13.65 0 0 0 7.55 22a13.63 13.63 0 0 0 9.96-4.16A14.26 14.26 0 0 0 21.6 7.65V7c.94-.72 1.75-1.6 2.4-2.6Z"/></svg></a> </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-4yphtoen"> <span class="sr-only astro-4yphtoen">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> <select autocomplete="off" class="astro-4yphtoen"> <option value="dark" class="astro-4yphtoen">Dark</option><option value="light" class="astro-4yphtoen">Light</option><option value="auto" selected class="astro-4yphtoen">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg> </label>  </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script> <script type="module">const r="starlight-theme",o=e=>e==="auto"||e==="dark"||e==="light"?e:"auto",c=()=>o(typeof localStorage<"u"&&localStorage.getItem(r));function n(e){typeof localStorage<"u"&&localStorage.setItem(r,e==="light"||e==="dark"?e:"")}const l=()=>matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";function t(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e==="auto"?l():e,n(e)}matchMedia("(prefers-color-scheme: light)").addEventListener("change",()=>{c()==="auto"&&t("auto")});class s extends HTMLElement{constructor(){super(),t(c()),this.querySelector("select")?.addEventListener("change",a=>{a.currentTarget instanceof HTMLSelectElement&&t(o(a.currentTarget.value))})}}customElements.define("starlight-theme-select",s);</script> <script type="module">class s extends HTMLElement{constructor(){super();const e=this.querySelector("select");e&&(e.addEventListener("change",t=>{t.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=t.currentTarget.value)}),window.addEventListener("pageshow",t=>{if(!t.persisted)return;const n=e.querySelector("option[selected]")?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}}customElements.define("starlight-lang-select",s);</script> </div> </div> </header> <nav class="sidebar print:hidden astro-vrdttmbt" aria-label="Main"> <starlight-menu-button class="print:hidden astro-jif73yzw"> <button aria-expanded="false" aria-label="Menu" aria-controls="starlight__sidebar" class="sl-flex md:sl-hidden astro-jif73yzw"> <svg aria-hidden="true" class="open-menu astro-jif73yzw astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg> <svg aria-hidden="true" class="close-menu astro-jif73yzw astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="m13.41 12 6.3-6.29a1.004 1.004 0 1 0-1.42-1.42L12 10.59l-6.29-6.3a1.004 1.004 0 0 0-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 0 0 0 1.42.998.998 0 0 0 1.42 0l6.29-6.3 6.29 6.3a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.42L13.41 12Z"/></svg> </button> </starlight-menu-button> <script type="module">class s extends HTMLElement{constructor(){super(),this.btn=this.querySelector("button"),this.btn.addEventListener("click",()=>this.toggleExpanded());const t=this.closest("nav");t&&t.addEventListener("keyup",e=>this.closeOnEscape(e))}setExpanded(t){this.setAttribute("aria-expanded",String(t)),document.body.toggleAttribute("data-mobile-menu-expanded",t)}toggleExpanded(){this.setExpanded(this.getAttribute("aria-expanded")!=="true")}closeOnEscape(t){t.code==="Escape"&&(this.setExpanded(!1),this.btn.focus())}}customElements.define("starlight-menu-button",s);</script>   <div id="starlight__sidebar" class="sidebar-pane astro-vrdttmbt"> <div class="sidebar-content sl-flex astro-vrdttmbt"> <sl-sidebar-state-persist data-hash="0c0r5pt" class="astro-kku4brbg"> <script aria-hidden="true">
+		(() => {
+			try {
+				if (!matchMedia('(min-width: 50em)').matches) return;
+				/** @type {HTMLElement | null} */
+				const target = document.querySelector('sl-sidebar-state-persist');
+				const state = JSON.parse(sessionStorage.getItem('sl-sidebar-state') || '0');
+				if (!target || !state || target.dataset.hash !== state.hash) return;
+				window._starlightScrollRestore = state.scroll;
+				customElements.define(
+					'sl-sidebar-restore',
+					class SidebarRestore extends HTMLElement {
+						connectedCallback() {
+							try {
+								const idx = parseInt(this.dataset.index || '');
+								const details = this.closest('details');
+								if (details && typeof state.open[idx] === 'boolean') details.open = state.open[idx];
+							} catch {}
+						}
+					}
+				);
+			} catch {}
+		})();
+	</script>  <ul class="top-level astro-3ii7xxms"> <li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">CWEM Docs</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="0"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/guides/company_work_environment_management/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">CWEM Guide</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/guides/hld/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">HLD</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/guides/lld/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">LLD</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/guides/architecture/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Architecture</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/guides/wireframe/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Wireframe</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/guides/kpi/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">KPI</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Datamigrato Docs</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="1"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/datamigrato/datamigrato_guide/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Datamigrato Guide</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/datamigrato/hld/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">HLD</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/datamigrato/lld/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">LLD</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <span class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Interview Ready</span>  </span> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <sl-sidebar-restore data-index="2"></sl-sidebar-restore> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/interview_ready/intro/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Introduction</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/interview_ready/hld/" aria-current="page" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">HLD</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/interview_ready/lld/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">LLD</span>  </a> </li> </ul>  </details> </li> </ul>   <script aria-hidden="true">
+		(() => {
+			const scroller = document.getElementById('starlight__sidebar');
+			if (!window._starlightScrollRestore || !scroller) return;
+			scroller.scrollTop = window._starlightScrollRestore;
+			delete window._starlightScrollRestore;
+		})();
+	</script> </sl-sidebar-state-persist>  <div class="md:sl-hidden"> <div class="mobile-preferences sl-flex astro-wu23bvmt"> <div class="social-icons astro-wu23bvmt"> <a href="https://github.com/ritikdutta.com" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">GitHub</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a><a href="https://x.com/RitikDutta7" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">Twitter</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M24 4.4a10 10 0 0 1-2.83.78 5.05 5.05 0 0 0 2.17-2.79 9.7 9.7 0 0 1-3.13 1.23 4.89 4.89 0 0 0-5.94-1.03 5 5 0 0 0-2.17 2.38 5.15 5.15 0 0 0-.3 3.25c-1.95-.1-3.86-.63-5.61-1.53a14.04 14.04 0 0 1-4.52-3.74 5.2 5.2 0 0 0-.09 4.91c.39.74.94 1.35 1.61 1.82a4.77 4.77 0 0 1-2.23-.63v.06c0 1.16.4 2.29 1.12 3.18a4.9 4.9 0 0 0 2.84 1.74c-.73.22-1.5.26-2.24.12a4.89 4.89 0 0 0 4.59 3.49A9.78 9.78 0 0 1 0 19.73 13.65 13.65 0 0 0 7.55 22a13.63 13.63 0 0 0 9.96-4.16A14.26 14.26 0 0 0 21.6 7.65V7c.94-.72 1.75-1.6 2.4-2.6Z"/></svg></a> </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-4yphtoen"> <span class="sr-only astro-4yphtoen">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> <select autocomplete="off" class="astro-4yphtoen"> <option value="dark" class="astro-4yphtoen">Dark</option><option value="light" class="astro-4yphtoen">Light</option><option value="auto" selected class="astro-4yphtoen">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg> </label>  </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script>   </div>  </div> </div> </div> </nav> <div class="main-frame astro-vrdttmbt">  <script type="module">const a=document.getElementById("starlight__sidebar"),n=a?.querySelector("sl-sidebar-state-persist"),o="sl-sidebar-state",i=()=>{let t=[];const e=n?.dataset.hash||"";try{const s=sessionStorage.getItem(o),r=JSON.parse(s||"{}");Array.isArray(r.open)&&r.hash===e&&(t=r.open)}catch{}return{hash:e,open:t,scroll:a?.scrollTop||0}},c=t=>{try{sessionStorage.setItem(o,JSON.stringify(t))}catch{}},d=()=>c(i()),l=(t,e)=>{const s=i();s.open[e]=t,c(s)};n?.addEventListener("click",t=>{if(!(t.target instanceof Element))return;const e=t.target.closest("summary")?.closest("details");if(!e)return;const s=e.querySelector("sl-sidebar-restore"),r=parseInt(s?.dataset.index||"");isNaN(r)||l(!e.open,r)});addEventListener("visibilitychange",()=>{document.visibilityState==="hidden"&&d()});addEventListener("pageHide",d);</script> <div class="lg:sl-flex astro-67yu43on"> <aside class="right-sidebar-container print:hidden astro-67yu43on"> <div class="right-sidebar astro-67yu43on"> <div class="lg:sl-hidden astro-pb3aqygn"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-doynk5tl"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-doynk5tl"><details id="starlight__mobile-toc" class="astro-doynk5tl"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-doynk5tl"><span class="toggle sl-flex astro-doynk5tl">On this page<svg aria-hidden="true" class="caret astro-doynk5tl astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></span><span class="display-current astro-doynk5tl"></span></summary><div class="dropdown astro-doynk5tl"><ul class="isMobile astro-g2bywc46" style="--depth: 0;"> <li class="astro-g2bywc46" style="--depth: 0;"> <a href="#_top" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#1-project-overview" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">1. Project Overview</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#11-problem-statement" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1.1 Problem statement</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#12-business-goal" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1.2 Business goal</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#13-user-goal" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1.3 User goal</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#14-why-this-system-is-needed" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1.4 Why this system is needed</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#15-key-differentiators" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1.5 Key differentiators</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2-scope" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2. Scope</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#21-in-scope" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.1 In scope</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#22-out-of-scope" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.2 Out of scope</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#23-assumptions" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.3 Assumptions</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#24-constraints" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.4 Constraints</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#3-functional-requirements" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">3. Functional Requirements</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#31-core-features" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.1 Core features</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#32-main-workflows" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.2 Main workflows</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#33-user-journeys" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.3 User journeys</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#34-system-actors" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.4 System actors</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#4-non-functional-requirements" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">4. Non-Functional Requirements</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#41-scalability" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.1 Scalability</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#42-performance" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.2 Performance</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#43-availability" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.3 Availability</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#44-reliability" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.4 Reliability</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#45-security" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.5 Security</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#46-privacy" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.6 Privacy</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#47-maintainability" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.7 Maintainability</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#48-observability" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.8 Observability</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#49-cost-efficiency" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.9 Cost efficiency</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#410-extensibility" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.10 Extensibility</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#5-system-architecture-overview" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">5. System Architecture Overview</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#51-architecture-style" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.1 Architecture style</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#52-why-this-architecture-was-chosen" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.2 Why this architecture was chosen</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#53-major-subsystems" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.3 Major subsystems</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#54-centralized-vs-distributed-components" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.4 Centralized vs distributed components</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#55-agent-based-design" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.5 Agent-based design</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#6-architecture-components" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">6. Architecture Components</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#61-api-gateway--session-layer" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.1 API Gateway / Session Layer</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#62-orchestration-engine" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.2 Orchestration Engine</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#63-resume-etl-service" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.3 Resume ETL Service</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#64-strategic-question-router" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.4 Strategic Question Router</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#65-retrieval-service" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.5 Retrieval Service</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#66-evaluation-service" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.6 Evaluation Service</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#67-feedback-aggregator" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.7 Feedback Aggregator</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#68-score-update-service" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.8 Score Update Service</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#69-relational-profile-store-mysql" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.9 Relational Profile Store (MySQL)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#610-vector-profile-store-pinecone" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.10 Vector Profile Store (Pinecone)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#611-question-bank-ingestion-pipeline" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.11 Question Bank Ingestion Pipeline</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#7-end-to-end-workflow" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">7. End-to-End Workflow</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#failure-points-and-fallback-paths" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Failure points and fallback paths</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#8-data-flow-architecture" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">8. Data Flow Architecture</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#how-data-enters" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">How data enters</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#how-data-is-processed" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">How data is processed</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#how-data-is-stored" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">How data is stored</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#how-data-is-retrieved" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">How data is retrieved</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#9-ai--ml--llm--agent-architecture" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">9. AI / ML / LLM / Agent Architecture</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#91-main-orchestration-logic" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9.1 Main orchestration logic</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#92-role-of-central-agent" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9.2 Role of central agent</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#93-role-of-sub-agents" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9.3 Role of sub-agents</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#94-tool-calling-architecture" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9.4 Tool-calling architecture</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#95-memory--profile--context-handling" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9.5 Memory / profile / context handling</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#96-prompt-orchestration-strategy" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9.6 Prompt orchestration strategy</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#97-evaluation--scoring--guardrails" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9.7 Evaluation / scoring / guardrails</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#98-why-sub-agents-instead-of-one-monolithic-agent" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9.8 Why sub-agents instead of one monolithic agent</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#99-agent-orchestration-diagram" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9.9 Agent orchestration diagram</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#10-integration-architecture" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">10. Integration Architecture</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#101-external-apis--services" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">10.1 External APIs / services</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#102-api-gateway-level-architecture" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">10.2 API gateway-level architecture</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#11-deployment-architecture" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">11. Deployment Architecture</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#111-development" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">11.1 Development</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#112-staging" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">11.2 Staging</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#113-production" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">11.3 Production</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#114-cicd" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">11.4 CI/CD</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#115-load-balancing-and-autoscaling" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">11.5 Load balancing and autoscaling</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#12-security-architecture" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">12. Security Architecture</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#121-authentication" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">12.1 Authentication</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#122-authorization" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">12.2 Authorization</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#123-encryption" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">12.3 Encryption</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#124-input-validation" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">12.4 Input validation</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#125-prompt-injection-protection" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">12.5 Prompt injection protection</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#126-data-isolation" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">12.6 Data isolation</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#127-abuse-prevention" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">12.7 Abuse prevention</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#128-audit-logging" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">12.8 Audit logging</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#129-security-boundaries" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">12.9 Security boundaries</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#13-database-and-storage-architecture" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">13. Database and Storage Architecture</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#storage-decision-mapping" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Storage decision mapping</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#data-retention" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Data retention</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#backup-and-recovery" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Backup and recovery</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#14-scalability-and-performance-design" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">14. Scalability and Performance Design</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#how-the-system-scales" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">How the system scales</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#bottlenecks" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Bottlenecks</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#caching-strategy" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Caching strategy</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#rate-limiting" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Rate limiting</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#queues" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Queues</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#model-latency-considerations" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Model latency considerations</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#costperformance-tradeoffs" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Cost/performance tradeoffs</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#15-reliability-and-fault-tolerance" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">15. Reliability and Fault Tolerance</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#retry-strategies" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Retry strategies</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#fallback-mechanisms" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Fallback mechanisms</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#circuit-breakers" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Circuit breakers</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#graceful-degradation" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Graceful degradation</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#failure-isolation" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Failure isolation</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#recovery-handling" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Recovery handling</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#16-observability-and-monitoring" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">16. Observability and Monitoring</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#logs" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Logs</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#metrics" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Metrics</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#traces" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Traces</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#alerting" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Alerting</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#17-architecture-decision-rationale" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">17. Architecture Decision Rationale</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#why-this-architecture-is-good-for-this-project" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Why this architecture is good for this project</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#major-tradeoffs" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Major tradeoffs</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#alternative-architectures-considered" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Alternative architectures considered</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#18-risks-and-mitigations" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">18. Risks and Mitigations</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#technical-risks" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Technical risks</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#product-risks" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Product risks</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#data-risks" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Data risks</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#ai-specific-risks" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">AI-specific risks</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#scaling-risks" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Scaling risks</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#security-risks" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Security risks</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#19-future-enhancements" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">19. Future Enhancements</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#20-summary" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">20. Summary</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#1-why-not-use-a-single-llm-agent" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1. Why not use a single LLM agent?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#2-why-do-you-need-both-mysql-and-pinecone" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2. Why do you need both MySQL and Pinecone?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#3-why-keep-a-central-orchestrator" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3. Why keep a central orchestrator?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#4-why-use-sub-agents" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4. Why use sub-agents?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#5-how-do-you-prevent-one-bad-answer-from-ruining-the-profile" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5. How do you prevent one bad answer from ruining the profile?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#6-how-does-the-system-choose-the-next-question" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6. How does the system choose the next question?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#7-how-do-you-handle-retrieval-mismatch" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">7. How do you handle retrieval mismatch?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#8-what-happens-if-resume-parsing-fails" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">8. What happens if resume parsing fails?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#9-how-would-you-scale-this-in-production" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9. How would you scale this in production?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#10-what-is-the-biggest-architectural-strength-here" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">10. What is the biggest architectural strength here?</span> </a>  </li> </ul>  </li> </ul> </div></details></nav></mobile-starlight-toc><script type="module" src="/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.C181hMzK.js"></script></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-pb3aqygn"><div class="sl-container astro-pb3aqygn"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-g2bywc46" style="--depth: 0;"> <li class="astro-g2bywc46" style="--depth: 0;"> <a href="#_top" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#1-project-overview" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">1. Project Overview</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#11-problem-statement" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1.1 Problem statement</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#12-business-goal" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1.2 Business goal</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#13-user-goal" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1.3 User goal</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#14-why-this-system-is-needed" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1.4 Why this system is needed</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#15-key-differentiators" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1.5 Key differentiators</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2-scope" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2. Scope</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#21-in-scope" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.1 In scope</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#22-out-of-scope" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.2 Out of scope</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#23-assumptions" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.3 Assumptions</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#24-constraints" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.4 Constraints</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#3-functional-requirements" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">3. Functional Requirements</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#31-core-features" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.1 Core features</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#32-main-workflows" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.2 Main workflows</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#33-user-journeys" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.3 User journeys</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#34-system-actors" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.4 System actors</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#4-non-functional-requirements" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">4. Non-Functional Requirements</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#41-scalability" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.1 Scalability</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#42-performance" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.2 Performance</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#43-availability" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.3 Availability</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#44-reliability" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.4 Reliability</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#45-security" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.5 Security</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#46-privacy" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.6 Privacy</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#47-maintainability" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.7 Maintainability</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#48-observability" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.8 Observability</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#49-cost-efficiency" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.9 Cost efficiency</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#410-extensibility" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.10 Extensibility</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#5-system-architecture-overview" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">5. System Architecture Overview</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#51-architecture-style" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.1 Architecture style</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#52-why-this-architecture-was-chosen" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.2 Why this architecture was chosen</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#53-major-subsystems" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.3 Major subsystems</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#54-centralized-vs-distributed-components" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.4 Centralized vs distributed components</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#55-agent-based-design" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.5 Agent-based design</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#6-architecture-components" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">6. Architecture Components</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#61-api-gateway--session-layer" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.1 API Gateway / Session Layer</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#62-orchestration-engine" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.2 Orchestration Engine</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#63-resume-etl-service" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.3 Resume ETL Service</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#64-strategic-question-router" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.4 Strategic Question Router</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#65-retrieval-service" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.5 Retrieval Service</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#66-evaluation-service" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.6 Evaluation Service</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#67-feedback-aggregator" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.7 Feedback Aggregator</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#68-score-update-service" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.8 Score Update Service</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#69-relational-profile-store-mysql" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.9 Relational Profile Store (MySQL)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#610-vector-profile-store-pinecone" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.10 Vector Profile Store (Pinecone)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#611-question-bank-ingestion-pipeline" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.11 Question Bank Ingestion Pipeline</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#7-end-to-end-workflow" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">7. End-to-End Workflow</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#failure-points-and-fallback-paths" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Failure points and fallback paths</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#8-data-flow-architecture" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">8. Data Flow Architecture</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#how-data-enters" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">How data enters</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#how-data-is-processed" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">How data is processed</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#how-data-is-stored" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">How data is stored</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#how-data-is-retrieved" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">How data is retrieved</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#9-ai--ml--llm--agent-architecture" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">9. AI / ML / LLM / Agent Architecture</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#91-main-orchestration-logic" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9.1 Main orchestration logic</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#92-role-of-central-agent" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9.2 Role of central agent</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#93-role-of-sub-agents" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9.3 Role of sub-agents</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#94-tool-calling-architecture" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9.4 Tool-calling architecture</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#95-memory--profile--context-handling" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9.5 Memory / profile / context handling</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#96-prompt-orchestration-strategy" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9.6 Prompt orchestration strategy</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#97-evaluation--scoring--guardrails" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9.7 Evaluation / scoring / guardrails</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#98-why-sub-agents-instead-of-one-monolithic-agent" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9.8 Why sub-agents instead of one monolithic agent</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#99-agent-orchestration-diagram" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9.9 Agent orchestration diagram</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#10-integration-architecture" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">10. Integration Architecture</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#101-external-apis--services" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">10.1 External APIs / services</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#102-api-gateway-level-architecture" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">10.2 API gateway-level architecture</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#11-deployment-architecture" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">11. Deployment Architecture</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#111-development" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">11.1 Development</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#112-staging" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">11.2 Staging</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#113-production" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">11.3 Production</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#114-cicd" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">11.4 CI/CD</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#115-load-balancing-and-autoscaling" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">11.5 Load balancing and autoscaling</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#12-security-architecture" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">12. Security Architecture</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#121-authentication" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">12.1 Authentication</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#122-authorization" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">12.2 Authorization</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#123-encryption" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">12.3 Encryption</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#124-input-validation" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">12.4 Input validation</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#125-prompt-injection-protection" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">12.5 Prompt injection protection</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#126-data-isolation" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">12.6 Data isolation</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#127-abuse-prevention" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">12.7 Abuse prevention</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#128-audit-logging" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">12.8 Audit logging</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#129-security-boundaries" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">12.9 Security boundaries</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#13-database-and-storage-architecture" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">13. Database and Storage Architecture</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#storage-decision-mapping" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Storage decision mapping</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#data-retention" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Data retention</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#backup-and-recovery" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Backup and recovery</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#14-scalability-and-performance-design" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">14. Scalability and Performance Design</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#how-the-system-scales" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">How the system scales</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#bottlenecks" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Bottlenecks</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#caching-strategy" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Caching strategy</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#rate-limiting" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Rate limiting</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#queues" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Queues</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#model-latency-considerations" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Model latency considerations</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#costperformance-tradeoffs" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Cost/performance tradeoffs</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#15-reliability-and-fault-tolerance" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">15. Reliability and Fault Tolerance</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#retry-strategies" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Retry strategies</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#fallback-mechanisms" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Fallback mechanisms</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#circuit-breakers" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Circuit breakers</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#graceful-degradation" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Graceful degradation</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#failure-isolation" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Failure isolation</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#recovery-handling" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Recovery handling</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#16-observability-and-monitoring" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">16. Observability and Monitoring</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#logs" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Logs</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#metrics" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Metrics</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#traces" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Traces</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#alerting" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Alerting</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#17-architecture-decision-rationale" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">17. Architecture Decision Rationale</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#why-this-architecture-is-good-for-this-project" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Why this architecture is good for this project</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#major-tradeoffs" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Major tradeoffs</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#alternative-architectures-considered" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Alternative architectures considered</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#18-risks-and-mitigations" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">18. Risks and Mitigations</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#technical-risks" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Technical risks</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#product-risks" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Product risks</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#data-risks" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Data risks</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#ai-specific-risks" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">AI-specific risks</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#scaling-risks" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Scaling risks</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#security-risks" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Security risks</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#19-future-enhancements" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">19. Future Enhancements</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#20-summary" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">20. Summary</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#1-why-not-use-a-single-llm-agent" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1. Why not use a single LLM agent?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#2-why-do-you-need-both-mysql-and-pinecone" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2. Why do you need both MySQL and Pinecone?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#3-why-keep-a-central-orchestrator" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3. Why keep a central orchestrator?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#4-why-use-sub-agents" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4. Why use sub-agents?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#5-how-do-you-prevent-one-bad-answer-from-ruining-the-profile" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5. How do you prevent one bad answer from ruining the profile?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#6-how-does-the-system-choose-the-next-question" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6. How does the system choose the next question?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#7-how-do-you-handle-retrieval-mismatch" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">7. How do you handle retrieval mismatch?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#8-what-happens-if-resume-parsing-fails" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">8. What happens if resume parsing fails?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#9-how-would-you-scale-this-in-production" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">9. How would you scale this in production?</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#10-what-is-the-biggest-architectural-strength-here" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">10. What is the biggest architectural strength here?</span> </a>  </li> </ul>  </li> </ul> </nav></starlight-toc><script type="module" src="/_astro/TableOfContents.astro_astro_type_script_index_0_lang.CKWWgpjV.js"></script></div></div> </div> </aside> <div class="main-pane astro-67yu43on">  <main data-pagefind-body class="astro-bguv2lll" lang="en" dir="ltr">    <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <h1 id="_top" class="astro-j6tvhyss">Interview Mentor HLD</h1>  </div> </div>  <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <div class="sl-markdown-content">  <h2 id="1-project-overview">1. Project Overview</h2>
+<h3 id="11-problem-statement">1.1 Problem statement</h3>
+<p>Interview preparation is usually static, generic, and weakly personalized. Most mock interview tools either ask random questions, behave like a monolithic chatbot, or provide shallow feedback that does not evolve with the user over time. That makes them poor at simulating real interviews, poor at tracking improvement, and poor at targeting weakness areas.</p>
+<h3 id="12-business-goal">1.2 Business goal</h3>
+<p>Interview Mentor is designed as a production-grade adaptive interview platform that can:</p>
+<ul>
+<li>increase user interview readiness,</li>
+<li>improve retention by making each session personalized,</li>
+<li>create a reusable backend architecture for multiple interview domains,</li>
+<li>support scalable question-bank growth and multi-user concurrency,</li>
+<li>become a differentiator as an AI-native interview engine rather than just an LLM chat wrapper.</li>
+</ul>
+<h3 id="13-user-goal">1.3 User goal</h3>
+<p>The user wants a system that:</p>
+<ul>
+<li>understands their background,</li>
+<li>asks relevant questions,</li>
+<li>adjusts difficulty dynamically,</li>
+<li>identifies strengths and weaknesses,</li>
+<li>scores performance fairly,</li>
+<li>helps them improve over repeated sessions.</li>
+</ul>
+<h3 id="14-why-this-system-is-needed">1.4 Why this system is needed</h3>
+<p>A generic chatbot can answer interview questions, but it does not behave like an interview platform. Interview Mentor is needed because it adds:</p>
+<ul>
+<li>profile-aware questioning,</li>
+<li>workflow orchestration,</li>
+<li>structured multi-metric evaluation,</li>
+<li>persistent memory,</li>
+<li>adaptive progression,</li>
+<li>strategy-based interviewing,</li>
+<li>reusable agent boundaries.</li>
+</ul>
+<h3 id="15-key-differentiators">1.5 Key differentiators</h3>
+<p>The strongest differentiator is architectural: the main orchestrator is <strong>orchestration-aware, not implementation-aware</strong>. It only knows when to invoke a specialized sub-agent, what input to pass, and what output contract to consume. It does not need to know internal retrieval logic, ETL logic, or scoring internals. That gives modularity, abstraction, maintainability, and future extensibility.</p>
+<p>Other differentiators:</p>
+<ul>
+<li>resume-to-profile ETL with canonical normalization,</li>
+<li>strategic query planning before retrieval,</li>
+<li>question-bank ingestion with taxonomy standardization,</li>
+<li>evaluation across three explicit dimensions,</li>
+<li>smoothed score updates using EMA + lifetime mean hybrid,</li>
+<li>dual persistence model: relational truth + vector memory.</li>
+</ul>
+<hr>
+<h2 id="2-scope">2. Scope</h2>
+<h3 id="21-in-scope">2.1 In scope</h3>
+<ul>
+<li>Candidate onboarding</li>
+<li>New vs returning user detection</li>
+<li>Domain capture</li>
+<li>Resume ingestion and ETL</li>
+<li>Canonical normalization of domain and skills</li>
+<li>Persistent user profile</li>
+<li>Strategy-driven question planning</li>
+<li>Question retrieval from vectorized interview bank</li>
+<li>Interactive interview loop</li>
+<li>Answer evaluation on technical accuracy, reasoning depth, and communication clarity</li>
+<li>Feedback aggregation</li>
+<li>Score persistence and smoothing</li>
+<li>Strength/weakness updates</li>
+<li>Repeated session continuity.</li>
+</ul>
+<h3 id="22-out-of-scope">2.2 Out of scope</h3>
+<ul>
+<li>Live voice bot as a hard requirement</li>
+<li>Full recruiter-side ATS workflows</li>
+<li>Human interviewer scheduling</li>
+<li>Candidate proctoring / anti-cheating webcam monitoring</li>
+<li>Enterprise multi-org admin console</li>
+<li>Fine-tuning proprietary LLMs</li>
+<li>Video analysis</li>
+<li>Real-time collaborative interview panels</li>
+</ul>
+<h3 id="23-assumptions">2.3 Assumptions</h3>
+<ul>
+<li>Frontend exists as web/mobile UI and calls backend APIs.</li>
+<li>Authentication is handled with OAuth2/JWT, though the current code artifacts mainly show backend workflow and storage layers.</li>
+<li>Resume files are stored in secure object storage in production, even though local/file URL paths are supported in current ETL code.</li>
+<li>Background processing is introduced for expensive ETL and ingestion jobs.</li>
+<li>Multi-tenant isolation is required in production even if the current prototype is user-centric.</li>
+<li>LLM orchestration remains centralized, while specialized sub-agents remain modular units behind contracts.</li>
+</ul>
+<h3 id="24-constraints">2.4 Constraints</h3>
+<ul>
+<li>LLM latency and cost</li>
+<li>External provider availability</li>
+<li>Resume parsing quality variability</li>
+<li>Retrieval quality dependence on taxonomy and vector coverage</li>
+<li>Need for deterministic workflow around inherently probabilistic model outputs</li>
+<li>Need to keep prompt context short and bounded</li>
+</ul>
+<hr>
+<h2 id="3-functional-requirements">3. Functional Requirements</h2>
+<h3 id="31-core-features">3.1 Core features</h3>
+<p>The system must:</p>
+<ul>
+<li>identify new vs returning users,</li>
+<li>collect domain and resume input,</li>
+<li>extract structured profile attributes from resume,</li>
+<li>normalize skills/domain into canonical forms,</li>
+<li>store profile in persistent stores,</li>
+<li>choose interview strategy,</li>
+<li>generate a query plan,</li>
+<li>retrieve the next best question,</li>
+<li>ask the user,</li>
+<li>evaluate the answer on three metrics,</li>
+<li>generate combined feedback,</li>
+<li>update scores and profile,</li>
+<li>decide whether to continue or end.</li>
+</ul>
+<h3 id="32-main-workflows">3.2 Main workflows</h3>
+<p><strong>New user workflow</strong></p>
+<ol>
+<li>Check if user exists.</li>
+<li>Initialize base relational and vector profile.</li>
+<li>Ask for domain.</li>
+<li>Ask for resume.</li>
+<li>Run resume ETL if resume is present.</li>
+<li>Merge resume-derived profile into persistent stores.</li>
+<li>Start adaptive interview loop.</li>
+</ol>
+<p><strong>Returning user workflow</strong></p>
+<ol>
+<li>Load stored profile and academic summary.</li>
+<li>Select strategy or infer it.</li>
+<li>Query and retrieve next question.</li>
+<li>Evaluate answer.</li>
+<li>Update profile and scores.</li>
+<li>Continue until user exits.</li>
+</ol>
+<h3 id="33-user-journeys">3.3 User journeys</h3>
+<p><strong>Candidate</strong></p>
+<ul>
+<li>uploads resume or skips,</li>
+<li>receives tailored question,</li>
+<li>answers,</li>
+<li>gets actionable feedback,</li>
+<li>repeats over multiple sessions,</li>
+<li>sees progressive improvement.</li>
+</ul>
+<p><strong>Admin/content curator</strong></p>
+<ul>
+<li>ingests or updates question bank PDFs,</li>
+<li>verifies taxonomy quality,</li>
+<li>monitors retrieval quality and coverage.</li>
+</ul>
+<p><strong>Platform operator</strong></p>
+<ul>
+<li>monitors latency, failures, provider usage, and storage health.</li>
+</ul>
+<h3 id="34-system-actors">3.4 System actors</h3>
+<ul>
+<li>Candidate</li>
+<li>Frontend client</li>
+<li>API gateway/backend</li>
+<li>Orchestration engine</li>
+<li>Profile ETL agent</li>
+<li>Strategy planning agent</li>
+<li>Retrieval service</li>
+<li>Evaluation service</li>
+<li>Persistence layer</li>
+<li>Admin ingestion pipeline</li>
+<li>Monitoring and security services</li>
+</ul>
+<hr>
+<h2 id="4-non-functional-requirements">4. Non-Functional Requirements</h2>
+<h3 id="41-scalability">4.1 Scalability</h3>
+<p>The platform must scale horizontally for concurrent interview sessions. Stateless API/orchestrator instances should scale independently from ETL workers and ingestion workers.</p>
+<h3 id="42-performance">4.2 Performance</h3>
+<p>Target interactive question round-trip should remain low enough to feel conversational. Retrieval should stay fast; evaluation can tolerate slightly higher latency than retrieval. Resume ETL can be asynchronous if needed.</p>
+<h3 id="43-availability">4.3 Availability</h3>
+<p>The system should remain available even if one provider degrades. Question retrieval and session continuity should have graceful fallback.</p>
+<h3 id="44-reliability">4.4 Reliability</h3>
+<p>Profile updates must be durable. Repeated retries should be idempotent. Partial failures must not corrupt profile state.</p>
+<h3 id="45-security">4.5 Security</h3>
+<p>User documents, profiles, and scores are sensitive. Encryption, access control, audit logging, and prompt-injection controls are mandatory.</p>
+<h3 id="46-privacy">4.6 Privacy</h3>
+<p>Resume data and interview content should have clear retention rules and tenant isolation.</p>
+<h3 id="47-maintainability">4.7 Maintainability</h3>
+<p>Sub-agents must be replaceable behind stable I/O contracts. This is one of the system’s core architectural principles.</p>
+<h3 id="48-observability">4.8 Observability</h3>
+<p>Need logs, traces, model latency metrics, retrieval quality metrics, and business KPIs.</p>
+<h3 id="49-cost-efficiency">4.9 Cost efficiency</h3>
+<p>Use smaller/faster models where possible for routing and scoring, reserve expensive paths for tasks that actually need them. Current code already uses fast embedding models and Gemini Flash-style models, which aligns with that direction.</p>
+<h3 id="410-extensibility">4.10 Extensibility</h3>
+<p>New interview domains, new evaluation dimensions, new sub-agents, and new storage or provider backends should be pluggable.</p>
+<hr>
+<h2 id="5-system-architecture-overview">5. System Architecture Overview</h2>
+<h3 id="51-architecture-style">5.1 Architecture style</h3>
+<p>This system is best described as a <strong>modular, agent-orchestrated backend with centralized workflow control and polyglot persistence</strong>.</p>
+<p>It is not a single monolithic chatbot and not a fully decentralized swarm. Instead, it uses a central orchestrator to manage state transitions, while specialized sub-agents handle profile ETL, question planning, retrieval, and evaluation.</p>
+<h3 id="52-why-this-architecture-was-chosen">5.2 Why this architecture was chosen</h3>
+<p>A centralized orchestrator is the right choice here because interview flow is stateful and sequential:</p>
+<ul>
+<li>onboarding,</li>
+<li>profile enrichment,</li>
+<li>question planning,</li>
+<li>questioning,</li>
+<li>evaluation,</li>
+<li>profile mutation,</li>
+<li>loop control.</li>
+</ul>
+<p>That sequence benefits from explicit workflow control. At the same time, specialized work units should remain isolated, so the orchestrator does not absorb prompt complexity, retrieval complexity, or scoring complexity.</p>
+<h3 id="53-major-subsystems">5.3 Major subsystems</h3>
+<ul>
+<li>Client / interview UI</li>
+<li>API gateway / session API</li>
+<li>Orchestration engine</li>
+<li>Profile agent</li>
+<li>Resume ETL service</li>
+<li>Strategic question router</li>
+<li>Question retrieval service</li>
+<li>Evaluation service</li>
+<li>Feedback aggregator</li>
+<li>Score update service</li>
+<li>MySQL profile store</li>
+<li>Pinecone profile memory</li>
+<li>Pinecone question-bank vector store</li>
+<li>Question ingestion pipeline</li>
+<li>Monitoring and security layer</li>
+</ul>
+<h3 id="54-centralized-vs-distributed-components">5.4 Centralized vs distributed components</h3>
+<p><strong>Centralized</strong></p>
+<ul>
+<li>session state machine,</li>
+<li>loop progression,</li>
+<li>continue/exit decisions,</li>
+<li>top-level orchestration contract.</li>
+</ul>
+<p><strong>Distributed / specialized</strong></p>
+<ul>
+<li>resume ETL,</li>
+<li>taxonomy normalization,</li>
+<li>query planning,</li>
+<li>vector search,</li>
+<li>metric evaluation,</li>
+<li>score smoothing,</li>
+<li>question-bank ingestion.</li>
+</ul>
+<h3 id="55-agent-based-design">5.5 Agent-based design</h3>
+<p>The main orchestrator only consumes outputs from sub-agents. That is the right abstraction line:</p>
+<ul>
+<li>Profile agent returns normalized profile updates.</li>
+<li>Strategy agent returns a compact query plan.</li>
+<li>Retrieval returns a question and metadata.</li>
+<li>Evaluation returns structured metric results.</li>
+<li>Score service returns updated scores.</li>
+</ul>
+<hr>
+<h2 id="6-architecture-components">6. Architecture Components</h2>
+<h3 id="61-api-gateway--session-layer">6.1 API Gateway / Session Layer</h3>
+<p><strong>Responsibility:</strong> Accept authenticated client requests, create session context, enforce rate limits, hand off to orchestrator.
+<strong>Inputs:</strong> user identity, domain, resume URL/file, user answers, strategy choice.
+<strong>Outputs:</strong> prompts, next question, feedback, session state.
+<strong>Dependencies:</strong> auth provider, orchestrator, rate limiter.
+<strong>Why it exists:</strong> isolates client concerns from orchestration internals.
+<strong>Alternative:</strong> direct frontend-to-orchestrator coupling. Rejected because it weakens security and makes versioning harder.</p>
+<h3 id="62-orchestration-engine">6.2 Orchestration Engine</h3>
+<p><strong>Responsibility:</strong> Own the interview state machine.
+<strong>Inputs:</strong> session state, user messages, profile state, sub-agent outputs.
+<strong>Outputs:</strong> workflow transitions and final user-facing artifacts.
+<strong>Dependencies:</strong> profile service, ETL, router, retrieval, evaluators, persistence.
+<strong>Why it exists:</strong> interview flow is stateful and must be deterministic.
+<strong>Alternative:</strong> one large agent prompt. Rejected because state management, testing, and failure recovery become weak.
+The current LangGraph flow explicitly models new-user checks, domain capture, resume ETL, question querying, answer collection, three evaluation branches, aggregation, profile updates, and continue/exit routing.</p>
+<h3 id="63-resume-etl-service">6.3 Resume ETL Service</h3>
+<p><strong>Responsibility:</strong> Extract resume text, structure it, normalize domain/skills, and load profile data.
+<strong>Inputs:</strong> resume URL/path, optional name hint, user_id.
+<strong>Outputs:</strong> normalized interview profile.
+<strong>Dependencies:</strong> PDF loaders, LLM, canonical normalizer, MySQL, Pinecone.
+<strong>Why it exists:</strong> resume parsing is expensive, specialized, and independent from the main loop.
+<strong>Alternative:</strong> parse resume inline in the main prompt. Rejected because it bloats context and reduces repeatability.
+Current design extracts PDF pages, invokes a structured LLM, canonicalizes domain and skills via vector-based normalization, and persists the normalized result to both MySQL and Pinecone.</p>
+<h3 id="64-strategic-question-router">6.4 Strategic Question Router</h3>
+<p><strong>Responsibility:</strong> Convert current profile + strategy into a compact retrieval plan.
+<strong>Inputs:</strong> domain, skills, strengths, weaknesses, scores, summary, requested strategy.
+<strong>Outputs:</strong> <code>QueryPlan(strategy, query, domain, skill, difficulty, lang)</code>.
+<strong>Dependencies:</strong> MySQL, Pinecone profile metadata, LLM.
+<strong>Why it exists:</strong> question retrieval should be planned, not random.
+<strong>Alternative:</strong> retrieve directly using the raw profile text. Rejected because it reduces control over strategy and difficulty.
+The current router supports <code>skills</code>, <code>scores</code>, <code>weakness</code>, and <code>strength</code> strategies and uses semantic-first retrieval to avoid overfitting to strict labels.</p>
+<h3 id="65-retrieval-service">6.5 Retrieval Service</h3>
+<p><strong>Responsibility:</strong> Fetch the next best interview question from the question bank.
+<strong>Inputs:</strong> query plan, filters, namespace.
+<strong>Outputs:</strong> question text, metadata, question id.
+<strong>Dependencies:</strong> Pinecone question index.
+<strong>Why it exists:</strong> retrieval is a distinct concern from strategy planning.
+<strong>Alternative:</strong> hardcoded question flows. Rejected because the platform needs breadth and adaptability.</p>
+<h3 id="66-evaluation-service">6.6 Evaluation Service</h3>
+<p><strong>Responsibility:</strong> Score an answer across three metrics.
+<strong>Inputs:</strong> question, answer, metric rubric.
+<strong>Outputs:</strong> per-metric feedback and score.
+<strong>Dependencies:</strong> LLM with structured output.
+<strong>Why it exists:</strong> separate evaluation paths give cleaner rubrics and clearer observability.
+<strong>Alternative:</strong> one overall evaluator only. Rejected because it hides why a candidate did well or badly.
+Current evaluators explicitly score technical accuracy, reasoning depth, and communication clarity.</p>
+<h3 id="67-feedback-aggregator">6.7 Feedback Aggregator</h3>
+<p><strong>Responsibility:</strong> combine metric outputs into a short overall feedback summary and score.
+<strong>Inputs:</strong> three metric outputs.
+<strong>Outputs:</strong> combined score, overall narrative feedback.
+<strong>Dependencies:</strong> evaluation outputs, optional summarization LLM.
+<strong>Why it exists:</strong> it turns raw rubric scores into a user-friendly feedback artifact.</p>
+<h3 id="68-score-update-service">6.8 Score Update Service</h3>
+<p><strong>Responsibility:</strong> smooth per-question noise and persist longitudinal performance.
+<strong>Inputs:</strong> new metric scores + previous score state.
+<strong>Outputs:</strong> updated per-metric scores, overall score, incremented attempt count.
+<strong>Dependencies:</strong> MySQL academic summary.
+<strong>Why it exists:</strong> one answer should not swing the profile too violently.
+<strong>Alternative:</strong> naive overwrite or simple arithmetic mean. Rejected because it is either unstable or slow to adapt.
+Current implementation uses metric-level EMA and a hybrid overall score combining metric EMA and lifetime mean.</p>
+<h3 id="69-relational-profile-store-mysql">6.9 Relational Profile Store (MySQL)</h3>
+<p><strong>Responsibility:</strong> system of record for user profile and academic summary.
+<strong>Inputs:</strong> user metadata, skills, strengths, weaknesses, categories, academic metrics.
+<strong>Outputs:</strong> normalized profile rows and academic history state.
+<strong>Why it exists:</strong> transactional durability and consistent writes.
+Current schema includes <code>users</code> and <code>academic_summary</code>, with JSON-string list fields and explicit scoring columns including <code>question_attempted</code>.</p>
+<h3 id="610-vector-profile-store-pinecone">6.10 Vector Profile Store (Pinecone)</h3>
+<p><strong>Responsibility:</strong> semantic profile snapshot used by planners and retrieval-related components.
+<strong>Inputs:</strong> profile summary, canonical domain, skills, strengths, weaknesses.
+<strong>Outputs:</strong> vectorized profile metadata fetches.
+<strong>Why it exists:</strong> semantic access to profile state without rebuilding long textual context every time.
+Current implementation stores one profile vector per user in a dedicated namespace.</p>
+<h3 id="611-question-bank-ingestion-pipeline">6.11 Question Bank Ingestion Pipeline</h3>
+<p><strong>Responsibility:</strong> convert source PDFs into atomic, normalized, vectorized interview questions.
+<strong>Inputs:</strong> PDF question banks, taxonomies, version.
+<strong>Outputs:</strong> Pinecone vectors with skill/domain/difficulty/tags/categories metadata.
+<strong>Why it exists:</strong> question quality and metadata quality are foundational to adaptive retrieval.
+Current ingestion flow extracts text from PDFs, segments into atomic questions with an LLM, standardizes taxonomy labels, embeds them, and upserts them into Pinecone.</p>
+<hr>
+<h2 id="7-end-to-end-workflow">7. End-to-End Workflow</h2>
+<div class="expressive-code"><link rel="stylesheet" href="/_astro/ec.v4551.css"><script type="module" src="/_astro/ec.0vx5m.js"></script><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="mermaid"><code><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">flowchart TD</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">A[User starts session] --> B[API Gateway/Auth]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">B --> C[Orchestrator: check new vs returning]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">C -->|New| D[Initialize profile records]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">C -->|Returning| H[Load profile + scores]</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">D --> E[Ask domain]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">E --> F[Ask resume]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">F -->|Resume present| G[Resume ETL + normalization]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">F -->|No resume| H</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">G --> H</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">H --> I[Strategy selection / inference]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">I --> J[Strategic Question Router]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">J --> K[Question Retrieval]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">K --> L[Ask question]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">L --> M[Receive answer]</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">M --> N1[Evaluate technical accuracy]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">M --> N2[Evaluate reasoning depth]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">M --> N3[Evaluate communication clarity]</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">N1 --> O[Aggregate feedback]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">N2 --> O</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">N3 --> O</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">O --> P[Update strengths/weaknesses]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">P --> Q[Update smoothed scores]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">Q --> R{Continue?}</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">R -->|Yes| I</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">R -->|No| S[End session]</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="flowchart TD    A[User starts session] --> B[API Gateway/Auth]    B --> C[Orchestrator: check new vs returning]    C -->|New| D[Initialize profile records]    C -->|Returning| H[Load profile + scores]    D --> E[Ask domain]    E --> F[Ask resume]    F -->|Resume present| G[Resume ETL + normalization]    F -->|No resume| H    G --> H    H --> I[Strategy selection / inference]    I --> J[Strategic Question Router]    J --> K[Question Retrieval]    K --> L[Ask question]    L --> M[Receive answer]    M --> N1[Evaluate technical accuracy]    M --> N2[Evaluate reasoning depth]    M --> N3[Evaluate communication clarity]    N1 --> O[Aggregate feedback]    N2 --> O    N3 --> O    O --> P[Update strengths/weaknesses]    P --> Q[Update smoothed scores]    Q --> R{Continue?}    R -->|Yes| I    R -->|No| S[End session]"><div></div></button></div></figure></div>
+<p>This mirrors your actual LangGraph-style flow: user gating, onboarding, resume ETL, question query, answer capture, three parallel evaluation branches, aggregation, profile updates, and continue/exit control.</p>
+<h3 id="failure-points-and-fallback-paths">Failure points and fallback paths</h3>
+<ul>
+<li><strong>Resume load fails:</strong> continue with domain-only interview and mark profile as partial.</li>
+<li><strong>Normalization fails:</strong> persist raw labels and flag quality issue for later cleanup.</li>
+<li><strong>Question retrieval miss:</strong> ask curated fallback general question.</li>
+<li><strong>One metric evaluator fails:</strong> retry once, then degrade to partial evaluation and mark session incomplete.</li>
+<li><strong>MySQL write fails:</strong> retry and push to durable write queue.</li>
+<li><strong>Pinecone unavailable:</strong> use fallback metadata-based or curated question set.</li>
+<li><strong>LLM provider timeout:</strong> circuit-breaker and fallback model route.</li>
+</ul>
+<hr>
+<h2 id="8-data-flow-architecture">8. Data Flow Architecture</h2>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="mermaid"><code><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">flowchart LR</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">A[Resume / Domain / Answers] --> B[API / Orchestrator]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">B --> C[Resume ETL]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">C --> D[Canonical Normalizer]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">D --> E[(MySQL Users)]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">D --> F[(Pinecone Profile Namespace)]</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">B --> G[Question Router]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">G --> H[(MySQL Academic Summary)]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">G --> F</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">G --> I[(Pinecone Question Bank)]</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">I --> J[Retrieved Question]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">J --> B</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">B --> K[Evaluation Services]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">K --> L[Feedback Aggregator]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">L --> H</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">L --> E</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="flowchart LR    A[Resume / Domain / Answers] --> B[API / Orchestrator]    B --> C[Resume ETL]    C --> D[Canonical Normalizer]    D --> E[(MySQL Users)]    D --> F[(Pinecone Profile Namespace)]    B --> G[Question Router]    G --> H[(MySQL Academic Summary)]    G --> F    G --> I[(Pinecone Question Bank)]    I --> J[Retrieved Question]    J --> B    B --> K[Evaluation Services]    K --> L[Feedback Aggregator]    L --> H    L --> E"><div></div></button></div></figure></div>
+<h3 id="how-data-enters">How data enters</h3>
+<ul>
+<li>user-entered domain,</li>
+<li>resume URL/file,</li>
+<li>user answers,</li>
+<li>admin-ingested question-bank PDFs.</li>
+</ul>
+<h3 id="how-data-is-processed">How data is processed</h3>
+<ul>
+<li>resume text extraction,</li>
+<li>structured profile generation,</li>
+<li>canonical normalization,</li>
+<li>query planning,</li>
+<li>semantic retrieval,</li>
+<li>multi-metric evaluation,</li>
+<li>score smoothing.</li>
+</ul>
+<h3 id="how-data-is-stored">How data is stored</h3>
+<ul>
+<li>MySQL stores durable transactional profile and academic summary.</li>
+<li>Pinecone stores semantic profile snapshots and question vectors.</li>
+<li>Object storage stores resume artifacts in production.</li>
+<li>Monitoring stack stores logs/traces/metrics.</li>
+</ul>
+<h3 id="how-data-is-retrieved">How data is retrieved</h3>
+<ul>
+<li>MySQL for authoritative profile/scores,</li>
+<li>Pinecone profile namespace for semantic profile snapshot,</li>
+<li>Pinecone question namespace for next-question retrieval.</li>
+</ul>
+<hr>
+<h2 id="9-ai--ml--llm--agent-architecture">9. AI / ML / LLM / Agent Architecture</h2>
+<h3 id="91-main-orchestration-logic">9.1 Main orchestration logic</h3>
+<p>The orchestrator owns control flow and state transitions. It does not perform all domain logic itself. It calls sub-agents/services and consumes typed outputs.</p>
+<h3 id="92-role-of-central-agent">9.2 Role of central agent</h3>
+<p>The central agent decides:</p>
+<ul>
+<li>what happens next,</li>
+<li>when a sub-agent is invoked,</li>
+<li>which result is needed,</li>
+<li>whether the session continues or terminates.</li>
+</ul>
+<p>It should not know retrieval internals, ETL internals, or scoring internals. That is the core design strength in your architecture.</p>
+<h3 id="93-role-of-sub-agents">9.3 Role of sub-agents</h3>
+<ul>
+<li><strong>Profile agent</strong>: maintains long-term user state.</li>
+<li><strong>Resume ETL agent</strong>: extracts and normalizes resume data.</li>
+<li><strong>Strategy agent</strong>: decides next-question intent.</li>
+<li><strong>Retrieval tool/service</strong>: fetches best-fit question.</li>
+<li><strong>Evaluation agent(s)</strong>: score answer across three metrics.</li>
+<li><strong>Score updater</strong>: stabilizes longitudinal performance state.</li>
+</ul>
+<h3 id="94-tool-calling-architecture">9.4 Tool-calling architecture</h3>
+<p>This design is effectively tool/sub-agent orchestration:</p>
+<ul>
+<li>input contracts are small,</li>
+<li>outputs are structured,</li>
+<li>prompts are narrow,</li>
+<li>failures are isolated,</li>
+<li>replacement is easy.</li>
+</ul>
+<h3 id="95-memory--profile--context-handling">9.5 Memory / profile / context handling</h3>
+<p>Two memory layers exist:</p>
+<ul>
+<li><strong>durable relational memory</strong> for exact profile state and scores,</li>
+<li><strong>semantic vector memory</strong> for compact profile retrieval and planner context.</li>
+</ul>
+<h3 id="96-prompt-orchestration-strategy">9.6 Prompt orchestration strategy</h3>
+<p>Prompting should be separated by concern:</p>
+<ul>
+<li>resume extraction prompt,</li>
+<li>strategic planning prompt,</li>
+<li>metric evaluation prompt,</li>
+<li>aggregation prompt.</li>
+</ul>
+<p>That is better than a single giant system prompt because it reduces context pollution and improves testability. Current code already follows this pattern with structured outputs.</p>
+<h3 id="97-evaluation--scoring--guardrails">9.7 Evaluation / scoring / guardrails</h3>
+<p>Guardrails should include:</p>
+<ul>
+<li>schema-bound outputs,</li>
+<li>rubric-specific prompts,</li>
+<li>conservative grading rules,</li>
+<li>profanity/abuse filters,</li>
+<li>prompt injection detection on resume/question-bank text,</li>
+<li>per-agent timeouts,</li>
+<li>fallback providers.</li>
+</ul>
+<h3 id="98-why-sub-agents-instead-of-one-monolithic-agent">9.8 Why sub-agents instead of one monolithic agent</h3>
+<p>Because one monolithic agent would:</p>
+<ul>
+<li>need too much context,</li>
+<li>be harder to test,</li>
+<li>be less deterministic,</li>
+<li>blur responsibilities,</li>
+<li>create brittle prompts,</li>
+<li>be harder to replace or scale independently.</li>
+</ul>
+<p>Your current design intentionally avoids that by keeping the main layer focused on orchestration and consuming only sub-agent outputs.</p>
+<h3 id="99-agent-orchestration-diagram">9.9 Agent orchestration diagram</h3>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="mermaid"><code><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">flowchart TD</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">A[Central Orchestrator] --> B[Profile Agent]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">A --> C[Resume ETL Agent]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">A --> D[Strategy Agent]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">A --> E[Retrieval Tool]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">A --> F1[Eval Agent: Technical Accuracy]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">A --> F2[Eval Agent: Reasoning Depth]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">A --> F3[Eval Agent: Communication Clarity]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">A --> G[Score Update Service]</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">B --> A</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">C --> A</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">D --> A</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">E --> A</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">F1 --> A</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">F2 --> A</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">F3 --> A</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">G --> A</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="flowchart TD    A[Central Orchestrator] --> B[Profile Agent]    A --> C[Resume ETL Agent]    A --> D[Strategy Agent]    A --> E[Retrieval Tool]    A --> F1[Eval Agent: Technical Accuracy]    A --> F2[Eval Agent: Reasoning Depth]    A --> F3[Eval Agent: Communication Clarity]    A --> G[Score Update Service]    B --> A    C --> A    D --> A    E --> A    F1 --> A    F2 --> A    F3 --> A    G --> A"><div></div></button></div></figure></div>
+<hr>
+<h2 id="10-integration-architecture">10. Integration Architecture</h2>
+<h3 id="101-external-apis--services">10.1 External APIs / services</h3>
+<ul>
+<li>Gemini-family LLM for orchestration-adjacent structured tasks and evaluations</li>
+<li>OpenAI embeddings for vectorization</li>
+<li>Pinecone for vector storage and retrieval</li>
+<li>MySQL for transactional persistence</li>
+<li>PDF parsing libraries for resume/question-bank extraction</li>
+<li>OAuth2 identity provider in production</li>
+<li>Object storage for resume files</li>
+<li>Queue system for async ETL/ingestion</li>
+<li>Monitoring stack</li>
+</ul>
+<p>The current code artifacts explicitly show Gemini model usage, OpenAI embedding usage, Pinecone, and MySQL.</p>
+<h3 id="102-api-gateway-level-architecture">10.2 API gateway-level architecture</h3>
+<ul>
+<li>TLS termination</li>
+<li>auth verification</li>
+<li>rate limiting</li>
+<li>request ID injection</li>
+<li>payload validation</li>
+<li>routing to interview service</li>
+<li>admin route segregation</li>
+<li>audit log emission</li>
+</ul>
+<hr>
+<h2 id="11-deployment-architecture">11. Deployment Architecture</h2>
+<h3 id="111-development">11.1 Development</h3>
+<ul>
+<li>local containers,</li>
+<li>local MySQL,</li>
+<li>Pinecone dev namespace,</li>
+<li>local environment variables,</li>
+<li>mocked auth.</li>
+</ul>
+<h3 id="112-staging">11.2 Staging</h3>
+<ul>
+<li>same topology as prod at smaller scale,</li>
+<li>synthetic question bank,</li>
+<li>masked test resumes,</li>
+<li>canary deploys,</li>
+<li>chaos and fallback testing.</li>
+</ul>
+<h3 id="113-production">11.3 Production</h3>
+<p>Recommended:</p>
+<ul>
+<li>API Gateway / Load Balancer</li>
+<li>stateless interview API pods</li>
+<li>separate worker pool for ETL</li>
+<li>separate worker pool for ingestion</li>
+<li>MySQL managed instance</li>
+<li>Pinecone managed index</li>
+<li>object storage bucket</li>
+<li>secrets manager</li>
+<li>tracing/logging/metrics stack</li>
+<li>WAF + rate limiter</li>
+</ul>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="mermaid"><code><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">flowchart TD</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">U[Users] --> CDN[CDN / WAF / API Gateway]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">CDN --> APP[Interview API / Orchestrator Pods]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">APP --> MQ[Job Queue]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">APP --> MYSQL[(Managed MySQL)]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">APP --> P1[(Pinecone Profiles)]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">APP --> P2[(Pinecone Questions)]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">APP --> OBJ[(Object Storage)]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">APP --> OBS[Logs / Metrics / Traces]</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">MQ --> ETL[Resume ETL Workers]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">MQ --> INGEST[Question Ingestion Workers]</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">ETL --> OBJ</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">ETL --> MYSQL</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">ETL --> P1</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">INGEST --> OBJ</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">INGEST --> P2</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">INGEST --> OBS</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="flowchart TD    U[Users] --> CDN[CDN / WAF / API Gateway]    CDN --> APP[Interview API / Orchestrator Pods]    APP --> MQ[Job Queue]    APP --> MYSQL[(Managed MySQL)]    APP --> P1[(Pinecone Profiles)]    APP --> P2[(Pinecone Questions)]    APP --> OBJ[(Object Storage)]    APP --> OBS[Logs / Metrics / Traces]    MQ --> ETL[Resume ETL Workers]    MQ --> INGEST[Question Ingestion Workers]    ETL --> OBJ    ETL --> MYSQL    ETL --> P1    INGEST --> OBJ    INGEST --> P2    INGEST --> OBS"><div></div></button></div></figure></div>
+<h3 id="114-cicd">11.4 CI/CD</h3>
+<ul>
+<li>lint</li>
+<li>unit tests</li>
+<li>prompt contract tests</li>
+<li>retrieval regression tests</li>
+<li>container build</li>
+<li>vulnerability scan</li>
+<li>deploy to staging</li>
+<li>smoke test</li>
+<li>canary to production</li>
+<li>rollback on SLA breach</li>
+</ul>
+<h3 id="115-load-balancing-and-autoscaling">11.5 Load balancing and autoscaling</h3>
+<ul>
+<li>API layer autoscaled on CPU + request concurrency</li>
+<li>ETL workers autoscaled on queue depth</li>
+<li>ingestion workers scheduled off-peak</li>
+<li>model rate limits monitored centrally</li>
+</ul>
+<hr>
+<h2 id="12-security-architecture">12. Security Architecture</h2>
+<h3 id="121-authentication">12.1 Authentication</h3>
+<p>Assume OAuth2/OIDC with JWT bearer tokens.</p>
+<h3 id="122-authorization">12.2 Authorization</h3>
+<p>RBAC with at least:</p>
+<ul>
+<li>candidate,</li>
+<li>admin/content curator,</li>
+<li>operator.</li>
+</ul>
+<h3 id="123-encryption">12.3 Encryption</h3>
+<ul>
+<li>TLS in transit</li>
+<li>KMS-backed encryption at rest</li>
+<li>encrypted object storage</li>
+<li>secret values stored in secret manager, not env files in production</li>
+</ul>
+<h3 id="124-input-validation">12.4 Input validation</h3>
+<ul>
+<li>file type and size validation for resumes,</li>
+<li>URL allow/block lists,</li>
+<li>PDF sanitization,</li>
+<li>schema validation for LLM outputs,</li>
+<li>metadata validation during ingestion.</li>
+</ul>
+<h3 id="125-prompt-injection-protection">12.5 Prompt injection protection</h3>
+<ul>
+<li>treat resumes and question-bank docs as untrusted input,</li>
+<li>strip prompt-like instructions from documents,</li>
+<li>isolate tool permissions,</li>
+<li>do not allow raw document text to override system role,</li>
+<li>add detector rules for instruction-in-document patterns.</li>
+</ul>
+<h3 id="126-data-isolation">12.6 Data isolation</h3>
+<p>All reads and writes scoped by tenant/user identity. Pinecone namespaces and metadata filters should prevent cross-user leakage.</p>
+<h3 id="127-abuse-prevention">12.7 Abuse prevention</h3>
+<ul>
+<li>per-user and per-IP rate limits,</li>
+<li>quota on expensive ETL jobs,</li>
+<li>bot detection,</li>
+<li>anomaly detection on request volume.</li>
+</ul>
+<h3 id="128-audit-logging">12.8 Audit logging</h3>
+<p>Audit:</p>
+<ul>
+<li>login,</li>
+<li>resume upload,</li>
+<li>profile change,</li>
+<li>score update,</li>
+<li>admin ingestion,</li>
+<li>model/provider fallback events.</li>
+</ul>
+<h3 id="129-security-boundaries">12.9 Security boundaries</h3>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="mermaid"><code><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">flowchart LR</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">A[Public Internet] --> B[WAF / API Gateway]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">B --> C[Application Trust Zone]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">C --> D[(MySQL Private Network)]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">C --> E[(Pinecone Managed Service)]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">C --> F[(Object Storage Private Access)]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">C --> G[Secrets Manager]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">C --> H[Observability Backend]</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">style A fill:#fdd</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">style B fill:#ffd</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">style C fill:#dfd</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">style D fill:#ddf</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">style E fill:#ddf</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">style F fill:#ddf</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="flowchart LR    A[Public Internet] --> B[WAF / API Gateway]    B --> C[Application Trust Zone]    C --> D[(MySQL Private Network)]    C --> E[(Pinecone Managed Service)]    C --> F[(Object Storage Private Access)]    C --> G[Secrets Manager]    C --> H[Observability Backend]    style A fill:#fdd    style B fill:#ffd    style C fill:#dfd    style D fill:#ddf    style E fill:#ddf    style F fill:#ddf"><div></div></button></div></figure></div>
+<hr>
+<h2 id="13-database-and-storage-architecture">13. Database and Storage Architecture</h2>
+<h3 id="storage-decision-mapping">Storage decision mapping</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Data type</th><th>Store</th><th>Why</th></tr></thead><tbody><tr><td>user identity, domain, strengths, weaknesses, categories</td><td>MySQL</td><td>durable transactional source of truth</td></tr><tr><td>academic summary, attempts, smoothed scores</td><td>MySQL</td><td>exact updates and relational integrity</td></tr><tr><td>semantic profile snapshot</td><td>Pinecone</td><td>fast semantic access to compact user memory</td></tr><tr><td>question bank vectors</td><td>Pinecone</td><td>low-latency semantic retrieval</td></tr><tr><td>resume files/raw PDFs</td><td>object storage</td><td>cheap encrypted blob storage</td></tr><tr><td>logs/metrics/traces</td><td>observability stack</td><td>monitoring and troubleshooting</td></tr></tbody></table>
+<p>Current artifacts explicitly support MySQL <code>users</code> and <code>academic_summary</code>, Pinecone profile snapshots, and Pinecone question vectors.</p>
+<h3 id="data-retention">Data retention</h3>
+<p>Recommended:</p>
+<ul>
+<li>resume raw file: 7–30 days unless user opts into storage,</li>
+<li>normalized profile: retained while account is active,</li>
+<li>academic history: 12–24 months,</li>
+<li>audit logs: 1 year,</li>
+<li>deleted-user purge workflow with hard delete and tombstone tracking.</li>
+</ul>
+<h3 id="backup-and-recovery">Backup and recovery</h3>
+<ul>
+<li>MySQL daily full + PITR</li>
+<li>object storage versioning</li>
+<li>question-bank source artifacts versioned</li>
+<li>Pinecone rehydration from source ingestion pipeline</li>
+<li>disaster recovery runbook for provider outage</li>
+</ul>
+<hr>
+<h2 id="14-scalability-and-performance-design">14. Scalability and Performance Design</h2>
+<h3 id="how-the-system-scales">How the system scales</h3>
+<ul>
+<li>stateless API nodes scale horizontally</li>
+<li>orchestration workers scale by active sessions</li>
+<li>ETL workers scale separately</li>
+<li>ingestion workers run batch-oriented and separate from user traffic</li>
+</ul>
+<h3 id="bottlenecks">Bottlenecks</h3>
+<ul>
+<li>LLM latency</li>
+<li>vector DB latency under high concurrency</li>
+<li>PDF parsing</li>
+<li>write amplification if every answer persists synchronously</li>
+<li>provider rate limits</li>
+</ul>
+<h3 id="caching-strategy">Caching strategy</h3>
+<ul>
+<li>cache profile metadata in short-lived Redis/session cache</li>
+<li>cache query-plan results for same session step if replayed</li>
+<li>cache canonical normalization hits</li>
+<li>cache popular question metadata</li>
+<li>optionally prompt-cache repeated rubric prompts</li>
+</ul>
+<h3 id="rate-limiting">Rate limiting</h3>
+<ul>
+<li>per session</li>
+<li>per user</li>
+<li>per upload</li>
+<li>per admin ingestion batch</li>
+</ul>
+<h3 id="queues">Queues</h3>
+<p>Use queue for:</p>
+<ul>
+<li>resume ETL,</li>
+<li>question ingestion,</li>
+<li>deferred analytics,</li>
+<li>retryable write reconciliation.</li>
+</ul>
+<h3 id="model-latency-considerations">Model latency considerations</h3>
+<p>Use fast/cheap models for:</p>
+<ul>
+<li>query planning,</li>
+<li>structured extraction,</li>
+<li>short rubric evaluations.</li>
+</ul>
+<p>Reserve heavier models only for advanced explanations or optional deep feedback.</p>
+<h3 id="costperformance-tradeoffs">Cost/performance tradeoffs</h3>
+<p>Your current choices already point in the right direction:</p>
+<ul>
+<li><code>text-embedding-3-small</code> for embeddings,</li>
+<li>compact structured prompts,</li>
+<li>semantic-first retrieval,</li>
+<li>batched normalization queries,</li>
+<li>parallel metric evaluations.</li>
+</ul>
+<hr>
+<h2 id="15-reliability-and-fault-tolerance">15. Reliability and Fault Tolerance</h2>
+<h3 id="retry-strategies">Retry strategies</h3>
+<ul>
+<li>exponential backoff for provider calls</li>
+<li>idempotent DB writes</li>
+<li>deduplicated ingestion by content hash</li>
+<li>retriable ETL jobs with max attempts</li>
+</ul>
+<p>Question ingestion already uses content hashing and dedupe logic, which is a strong base for idempotency.</p>
+<h3 id="fallback-mechanisms">Fallback mechanisms</h3>
+<ul>
+<li>fallback question if retrieval miss</li>
+<li>fallback parser if primary PDF loader fails</li>
+<li>fallback model/provider</li>
+<li>partial evaluation mode if one evaluator times out</li>
+</ul>
+<p>The resume ETL already demonstrates loader fallback behavior.</p>
+<h3 id="circuit-breakers">Circuit breakers</h3>
+<p>Introduce provider-specific circuit breakers for:</p>
+<ul>
+<li>LLM calls</li>
+<li>Pinecone calls</li>
+<li>object storage</li>
+<li>MySQL</li>
+</ul>
+<h3 id="graceful-degradation">Graceful degradation</h3>
+<p>If personalization fails, the interview should still continue in generic mode rather than fully failing.</p>
+<h3 id="failure-isolation">Failure isolation</h3>
+<p>Each sub-agent should fail within its own boundary. The orchestrator records the failure and applies fallback without exposing internal errors to the user.</p>
+<h3 id="recovery-handling">Recovery handling</h3>
+<ul>
+<li>resume ETL jobs resumable</li>
+<li>session state checkpointing</li>
+<li>replay-safe score update workflow</li>
+<li>dead-letter queues for poison jobs</li>
+</ul>
+<hr>
+<h2 id="16-observability-and-monitoring">16. Observability and Monitoring</h2>
+<h3 id="logs">Logs</h3>
+<ul>
+<li>structured JSON logs</li>
+<li>request/session/user correlation IDs</li>
+<li>sub-agent invocation logs</li>
+<li>provider call logs</li>
+<li>error category tags</li>
+</ul>
+<h3 id="metrics">Metrics</h3>
+<p>Technical:</p>
+<ul>
+<li>question retrieval latency</li>
+<li>evaluation latency per metric</li>
+<li>ETL success rate</li>
+<li>Pinecone query latency</li>
+<li>MySQL query latency</li>
+<li>error rate by component</li>
+<li>fallback rate</li>
+<li>provider timeout rate</li>
+</ul>
+<p>Business:</p>
+<ul>
+<li>session completion rate</li>
+<li>average questions per session</li>
+<li>resume upload completion rate</li>
+<li>retention by day/week</li>
+<li>score improvement over time</li>
+<li>weak-skill coverage</li>
+<li>strategy selection distribution</li>
+</ul>
+<h3 id="traces">Traces</h3>
+<p>Distributed traces across:</p>
+<ul>
+<li>gateway</li>
+<li>orchestrator</li>
+<li>ETL</li>
+<li>vector retrieval</li>
+<li>scoring</li>
+<li>persistence writes</li>
+</ul>
+<h3 id="alerting">Alerting</h3>
+<p>Alert on:</p>
+<ul>
+<li>API latency SLA breach</li>
+<li>provider failure spikes</li>
+<li>score write failures</li>
+<li>ingestion failure spikes</li>
+<li>abnormal cost increase</li>
+<li>vector recall degradation</li>
+</ul>
+<hr>
+<h2 id="17-architecture-decision-rationale">17. Architecture Decision Rationale</h2>
+<h3 id="why-this-architecture-is-good-for-this-project">Why this architecture is good for this project</h3>
+<p>Because the product is fundamentally:</p>
+<ul>
+<li>stateful,</li>
+<li>adaptive,</li>
+<li>personalization-heavy,</li>
+<li>retrieval-backed,</li>
+<li>multi-step,</li>
+<li>explainability-sensitive.</li>
+</ul>
+<p>A centralized orchestrator with specialized sub-agents matches that shape well.</p>
+<h3 id="major-tradeoffs">Major tradeoffs</h3>
+<ul>
+<li>more components than a single chatbot</li>
+<li>more contracts to manage</li>
+<li>higher coordination complexity</li>
+<li>extra operational surface area</li>
+</ul>
+<p>But those costs are justified because personalization, testing, and extensibility improve significantly.</p>
+<h3 id="alternative-architectures-considered">Alternative architectures considered</h3>
+<p><strong>A. Single monolithic LLM agent</strong>
+Rejected because it would be prompt-heavy, hard to debug, weak on deterministic flow, and too coupled.</p>
+<p><strong>B. Pure rules engine + no agentic planning</strong>
+Rejected because it would be rigid and not adapt well to diverse resumes and evolving profile state.</p>
+<p><strong>C. Fully distributed microservices from day one</strong>
+Rejected because it would add operational complexity too early. A modular backend with clear internal boundaries is the better maturity path.</p>
+<hr>
+<h2 id="18-risks-and-mitigations">18. Risks and Mitigations</h2>
+<h3 id="technical-risks">Technical risks</h3>
+<ul>
+<li>external LLM dependency</li>
+<li>vector retrieval mismatch</li>
+<li>schema drift between stores</li>
+<li>ETL parse failures</li>
+</ul>
+<p>Mitigation:</p>
+<ul>
+<li>provider abstraction</li>
+<li>fallback questioning</li>
+<li>contract tests</li>
+<li>idempotent profile sync</li>
+<li>replayable jobs</li>
+</ul>
+<h3 id="product-risks">Product risks</h3>
+<ul>
+<li>feedback feels generic</li>
+<li>difficulty adaptation feels unfair</li>
+<li>low-quality question bank hurts trust</li>
+</ul>
+<p>Mitigation:</p>
+<ul>
+<li>rubric tuning</li>
+<li>human QA on question bank</li>
+<li>retrieval evaluation set</li>
+<li>session analytics review</li>
+</ul>
+<h3 id="data-risks">Data risks</h3>
+<ul>
+<li>bad resume extraction</li>
+<li>stale profiles</li>
+<li>inconsistent canonical labels</li>
+</ul>
+<p>Mitigation:</p>
+<ul>
+<li>normalization pipeline</li>
+<li>profile refresh option</li>
+<li>versioned taxonomy</li>
+</ul>
+<h3 id="ai-specific-risks">AI-specific risks</h3>
+<ul>
+<li>hallucinated evaluation</li>
+<li>overconfident scoring</li>
+<li>prompt injection from resume/question docs</li>
+</ul>
+<p>Mitigation:</p>
+<ul>
+<li>structured schema outputs</li>
+<li>rubric isolation</li>
+<li>conservative grading prompts</li>
+<li>injection sanitization</li>
+<li>sampling audits</li>
+</ul>
+<h3 id="scaling-risks">Scaling risks</h3>
+<ul>
+<li>ETL spikes</li>
+<li>ingestion contention</li>
+<li>model rate limits</li>
+</ul>
+<p>Mitigation:</p>
+<ul>
+<li>separate worker pools</li>
+<li>queues</li>
+<li>concurrency controls</li>
+<li>backpressure</li>
+</ul>
+<h3 id="security-risks">Security risks</h3>
+<ul>
+<li>document leakage</li>
+<li>cross-user data exposure</li>
+<li>admin ingestion abuse</li>
+</ul>
+<p>Mitigation:</p>
+<ul>
+<li>tenant scoping</li>
+<li>encrypted storage</li>
+<li>WAF/rate limits</li>
+<li>RBAC</li>
+<li>audit logs</li>
+</ul>
+<hr>
+<h2 id="19-future-enhancements">19. Future Enhancements</h2>
+<ul>
+<li>voice interview mode with STT/TTS</li>
+<li>recruiter dashboard and candidate analytics</li>
+<li>domain-specific evaluation rubrics</li>
+<li>difficulty calibration using historical cohort benchmarking</li>
+<li>session replay timeline</li>
+<li>fine-grained feedback history</li>
+<li>recommendation engine for study material after each weakness detection</li>
+<li>multi-language interview mode</li>
+<li>model router by task and cost budget</li>
+<li>reinforcement loop from user-rated feedback usefulness</li>
+</ul>
+<hr>
+<h2 id="20-summary">20. Summary</h2>
+<p>Interview Mentor is production-worthy because it is not designed as a thin LLM wrapper. It is a stateful, adaptive interview platform built around a central orchestrator, bounded specialized sub-agents, structured evaluation, semantic retrieval, and durable memory. The architecture is strong because it separates orchestration from implementation: the main controller knows <strong>what</strong> outcome is needed, while specialized sub-agents own <strong>how</strong> they produce that outcome. Combined with polyglot persistence, score smoothing, taxonomy-aware retrieval, and explicit fault handling, this makes the system suitable for real-world scaling and interview presentation.</p>
+<h1 id="concise-architecture-summary-for-interviews">Concise architecture summary for interviews</h1>
+<p>Interview Mentor is a centralized agent-orchestrated mock interview platform. A main orchestrator controls the interview flow, while specialized sub-agents handle resume ETL, profile management, question planning, retrieval, and evaluation. User profile state is stored durably in MySQL and semantically in Pinecone. The next question is not random; it is planned from user strengths, weaknesses, skills, and scores, then retrieved from a vectorized question bank. Answers are evaluated across technical accuracy, reasoning depth, and communication clarity, and scores are updated using EMA-style smoothing so the platform adapts over time instead of reacting to one isolated answer.</p>
+<h1 id="how-to-explain-this-hld-in-an-interview">How to explain this HLD in an interview</h1>
+<p>Start with this flow:</p>
+<ol>
+<li>“This is not a single chatbot; it is a centralized orchestration architecture.”</li>
+<li>“The orchestrator owns session flow, but specialized sub-agents own profile ETL, strategy, retrieval, and evaluation.”</li>
+<li>“I use MySQL as the source of truth and Pinecone for semantic memory and question retrieval.”</li>
+<li>“The interview adapts based on long-term profile plus the latest answer.”</li>
+<li>“Evaluation is split into three metrics, then aggregated and persisted with score smoothing.”</li>
+<li>“The key design principle is that the main agent is orchestration-aware, not implementation-aware.”</li>
+</ol>
+<p>That explanation is strong because it shows architecture maturity, not just model usage.</p>
+<h1 id="likely-architecture-questions-and-good-answers">Likely architecture questions and good answers</h1>
+<h3 id="1-why-not-use-a-single-llm-agent">1. Why not use a single LLM agent?</h3>
+<p>Because interview flow is stateful and repeatable, while resume parsing, planning, retrieval, and evaluation are different concerns. A single agent would be harder to control, test, and scale.</p>
+<h3 id="2-why-do-you-need-both-mysql-and-pinecone">2. Why do you need both MySQL and Pinecone?</h3>
+<p>MySQL is for exact, durable state and transactional updates. Pinecone is for semantic profile access and question retrieval. They solve different problems.</p>
+<h3 id="3-why-keep-a-central-orchestrator">3. Why keep a central orchestrator?</h3>
+<p>Because the interview is a workflow, not just a prompt. The orchestrator makes state transitions explicit and deterministic.</p>
+<h3 id="4-why-use-sub-agents">4. Why use sub-agents?</h3>
+<p>To isolate responsibilities, reduce prompt complexity, and make each unit independently testable and replaceable.</p>
+<h3 id="5-how-do-you-prevent-one-bad-answer-from-ruining-the-profile">5. How do you prevent one bad answer from ruining the profile?</h3>
+<p>I use smoothed score updates rather than raw overwrite. Per-metric EMA and hybrid overall scoring stabilize the profile over time.</p>
+<h3 id="6-how-does-the-system-choose-the-next-question">6. How does the system choose the next question?</h3>
+<p>It first builds a query plan from the profile and strategy, then retrieves from the question bank using semantic-first logic with optional filters.</p>
+<h3 id="7-how-do-you-handle-retrieval-mismatch">7. How do you handle retrieval mismatch?</h3>
+<p>Fallback question path, metadata filters, taxonomy standardization, and offline retrieval evaluation.</p>
+<h3 id="8-what-happens-if-resume-parsing-fails">8. What happens if resume parsing fails?</h3>
+<p>The session continues in partial-profile mode using domain input and generic adaptive questioning.</p>
+<h3 id="9-how-would-you-scale-this-in-production">9. How would you scale this in production?</h3>
+<p>Stateless API scaling, separate worker pools for ETL and ingestion, queues, caching, and managed storage/services.</p>
+<h3 id="10-what-is-the-biggest-architectural-strength-here">10. What is the biggest architectural strength here?</h3>
+<p>The orchestrator only depends on output contracts from specialized sub-agents, which keeps the architecture modular and extensible.</p>
+<p>If you want, I can turn this into a polished <strong>document-style version for submission</strong>, or a <strong>shorter architect interview version</strong> that sounds more natural when spoken.</p>  </div> <footer class="sl-flex astro-3yyafb3n"> <div class="meta sl-flex astro-3yyafb3n">   </div> <div class="pagination-links print:hidden astro-u2l5gyhi" dir="ltr"> <a href="/interview_ready/intro/" rel="prev" class="astro-u2l5gyhi"> <svg aria-hidden="true" class="astro-u2l5gyhi astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg> <span class="astro-u2l5gyhi"> Previous <br class="astro-u2l5gyhi"> <span class="link-title astro-u2l5gyhi">Introduction</span> </span> </a> <a href="/interview_ready/lld/" rel="next" class="astro-u2l5gyhi"> <svg aria-hidden="true" class="astro-u2l5gyhi astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg> <span class="astro-u2l5gyhi"> Next <br class="astro-u2l5gyhi"> <span class="link-title astro-u2l5gyhi">LLD</span> </span> </a> </div>   </footer>  </div> </div>   </main> </div> </div>  </div> </div>  </body></html>
