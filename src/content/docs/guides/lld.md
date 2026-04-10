@@ -21,6 +21,14 @@ The scope of this project is to develop a computer vision system named "Company 
 
 ### 2.1 Data Overview
 
+#### Why Cassandra was chosen
+
+For the Company Work Environment Management system, the database must support very fast reads and writes because employee activity records are generated continuously during prediction. We chose **Cassandra** because it is designed for **very low latency** and allows us to store high-volume activity data without slowing down the real-time pipeline.
+
+Another important reason is that Cassandra accepts **data duplication (denormalization)** as a normal design strategy. In this project, the same activity information can be stored in multiple query-specific tables such as the **Daily Activity** table and the **Total Activity** table. This is useful because Cassandra does not rely on complex joins like a relational database.
+
+Instead of calculating relationships at read time, we pre-organize the data in the exact structure needed by the application. That means each request can directly fetch the required record using a partition key lookup, which keeps database access simple, predictable, and extremely fast. This design helps the system maintain low latency while still supporting large-scale employee activity tracking.
+
 ### 2.2 **Daily Activity table:**
 
 ![Introduction Diagram](../../../assets/lld_data1.png "Introduction Diagram")
